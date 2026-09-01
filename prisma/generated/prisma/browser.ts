@@ -17,4 +17,33 @@ import * as Prisma from './internal/prismaNamespaceBrowser.js'
 export { Prisma }
 export * as $Enums from './enums.js'
 export * from './enums.js';
-
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model BloodRequest
+ * 
+ */
+export type BloodRequest = Prisma.BloodRequestModel
+/**
+ * Model DonationRecord
+ * 
+ */
+export type DonationRecord = Prisma.DonationRecordModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel

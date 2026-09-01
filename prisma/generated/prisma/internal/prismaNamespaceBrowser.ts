@@ -51,7 +51,12 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-
+  AuditLog: 'AuditLog',
+  BloodRequest: 'BloodRequest',
+  DonationRecord: 'DonationRecord',
+  Notification: 'Notification',
+  Payment: 'Payment',
+  User: 'User'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -68,4 +73,118 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const AuditLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  action: 'action',
+  entity: 'entity',
+  details: 'details',
+  createdAt: 'createdAt'
+} as const
+
+export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const BloodRequestScalarFieldEnum = {
+  id: 'id',
+  patientId: 'patientId',
+  bloodGroup: 'bloodGroup',
+  bagsNeeded: 'bagsNeeded',
+  hospitalName: 'hospitalName',
+  hospitalAddress: 'hospitalAddress',
+  city: 'city',
+  urgency: 'urgency',
+  status: 'status',
+  contactNumber: 'contactNumber',
+  neededBy: 'neededBy',
+  isDeleted: 'isDeleted',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BloodRequestScalarFieldEnum = (typeof BloodRequestScalarFieldEnum)[keyof typeof BloodRequestScalarFieldEnum]
+
+
+export const DonationRecordScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  donorId: 'donorId',
+  donatedAt: 'donatedAt'
+} as const
+
+export type DonationRecordScalarFieldEnum = (typeof DonationRecordScalarFieldEnum)[keyof typeof DonationRecordScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  requestId: 'requestId',
+  title: 'title',
+  message: 'message',
+  type: 'type',
+  isRead: 'isRead',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  amount: 'amount',
+  transactionId: 'transactionId',
+  gateway: 'gateway',
+  status: 'status',
+  createdAt: 'createdAt'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  password: 'password',
+  googleId: 'googleId',
+  fullName: 'fullName',
+  phoneNumber: 'phoneNumber',
+  role: 'role',
+  bloodGroup: 'bloodGroup',
+  city: 'city',
+  location: 'location',
+  isAvailable: 'isAvailable',
+  lastDonatedAt: 'lastDonatedAt',
+  isDeleted: 'isDeleted',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+} as const
+
+export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

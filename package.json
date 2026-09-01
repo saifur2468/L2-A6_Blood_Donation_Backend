@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
+    "studio": "prisma studio --schema=prisma/schema",
     "build": "tsc",
     "start": "node dist/server.js",
     "lint": "biome lint ./src",
-  "lint:fix": "biome check --write ./src",
-  "format": "biome format ./src --write"
+    "lint:fix": "biome check --write ./src",
+    "format": "biome format ./src --write"
   },
   "keywords": [],
   "author": "",
