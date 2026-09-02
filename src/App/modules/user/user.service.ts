@@ -13,6 +13,12 @@ export interface IUpdateProfilePayload {
   lastDonationDate?: string;
 }
 
+export interface IDonorQueryFilters {
+  bloodGroup?: string;
+  location?: string;
+  availabilityStatus?: string | boolean;
+}
+
 
 const getMyProfileFromDB = async (userId: string) => {
   const user = await prisma.user.findUnique({
@@ -86,7 +92,48 @@ const updateMyProfileInDB = async (
   return result;
 };
 
+
+const getAllDonorsFromDB = async (filters: IDonorQueryFilters) => {
+  const { bloodGroup, location, availabilityStatus } = filters;
+  const whereConditions: Record<string, any> = {};
+
+  if (bloodGroup) {
+    whereConditions.bloodGroup = bloodGroup;
+  }
+
+  if (location) {
+    whereConditions.city = {
+      contains: location,
+      mode: 'insensitive',
+    };
+  }
+
+  if (availabilityStatus !== undefined) {
+    whereConditions.isAvailable = availabilityStatus === 'true' || availabilityStatus === true;
+  }
+
+  const result = await prisma.user.findMany({
+    where: whereConditions,
+    select: {
+      id: true,
+      fullName: true,
+      email: true,
+      role: true,
+      bloodGroup: true,
+      city: true,
+      phoneNumber: true,
+      isAvailable: true,
+      lastDonatedAt: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return result;
+};
+
 export const UserService = {
   getMyProfileFromDB,
   updateMyProfileInDB,
+  getAllDonorsFromDB,
 };
