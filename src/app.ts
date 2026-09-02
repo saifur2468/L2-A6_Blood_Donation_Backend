@@ -1,9 +1,12 @@
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
-import { AuthRoutes } from './App/modules/auth/auth.route.js'; 
+import { AuthRoutes } from './App/modules/auth/auth.route.js';
 import { UserRoutes } from './App/modules/user/user.route.js';
+import { BloodRequestRoutes } from './App/modules/bloodRequest/bloodRequest.route.js';
+// import { PaymentRoutes } from './App/modules/payment/payment.route.js';
 import globalErrorHandler from './App/middlewares/globalErrorHandler.js';
+
 const app = express();
 
 // Middleware
@@ -15,7 +18,8 @@ app.use(helmet());
 // Application Routes
 app.use('/api/v1/auth', AuthRoutes);
 app.use('/api/v1/user', UserRoutes);
-app.use(globalErrorHandler);
+app.use('/api/v1/blood-request', BloodRequestRoutes);
+// app.use('/api/v1/payment', PaymentRoutes);
 
 // Test route
 app.get('/', (req, res) => {
@@ -25,5 +29,8 @@ app.get('/', (req, res) => {
     data: null,
   });
 });
+
+// Global Error Handler
+app.use(globalErrorHandler);
 
 export default app;
