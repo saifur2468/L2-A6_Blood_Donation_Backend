@@ -24,7 +24,7 @@ const router = express.Router();
 router.post(
   '/register',
   validateRequest(registerValidationSchema),
-  AuthController.registerUser // <-- এই কন্ট্রোলার হ্যান্ডলারটি যুক্ত করুন
+  AuthController.registerUser 
 );
 
 router.post('/login', AuthController.loginUser);
