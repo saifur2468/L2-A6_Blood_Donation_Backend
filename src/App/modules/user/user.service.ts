@@ -1,4 +1,4 @@
-import { PrismaClient } from '../../../../prisma/generated/prisma/client.js';
+import { PrismaClient, BloodGroup } from '../../../../prisma/generated/prisma/client.js';
 import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
 
@@ -19,6 +19,17 @@ export interface IDonorQueryFilters {
   availabilityStatus?: string | boolean;
 }
 
+
+const bloodGroupMap: Record<string, BloodGroup> = {
+  'A+': BloodGroup.A_POSITIVE,
+  'A-': BloodGroup.A_NEGATIVE,
+  'B+': BloodGroup.B_POSITIVE,
+  'B-': BloodGroup.B_NEGATIVE,
+  'AB+': BloodGroup.AB_POSITIVE,
+  'AB-': BloodGroup.AB_NEGATIVE,
+  'O+': BloodGroup.O_POSITIVE,
+  'O-': BloodGroup.O_NEGATIVE,
+};
 
 const getMyProfileFromDB = async (userId: string) => {
   const user = await prisma.user.findUnique({
@@ -46,7 +57,6 @@ const getMyProfileFromDB = async (userId: string) => {
 
   return user;
 };
-
 
 const updateMyProfileInDB = async (
   userId: string,
@@ -92,13 +102,21 @@ const updateMyProfileInDB = async (
   return result;
 };
 
-
 const getAllDonorsFromDB = async (filters: IDonorQueryFilters) => {
   const { bloodGroup, location, availabilityStatus } = filters;
   const whereConditions: Record<string, any> = {};
 
   if (bloodGroup) {
-    whereConditions.bloodGroup = bloodGroup;
+    // Accept both formats: "O+" (display) or "O_POSITIVE" (enum key) from the client.
+    const normalized = bloodGroupMap[bloodGroup] ?? (bloodGroup as BloodGroup);
+
+    if (!Object.values(BloodGroup).includes(normalized)) {
+      throw new Error(
+        `Invalid blood group "${bloodGroup}". Expected one of: ${Object.keys(bloodGroupMap).join(', ')}`
+      );
+    }
+
+    whereConditions.bloodGroup = normalized;
   }
 
   if (location) {
