@@ -6,6 +6,14 @@ const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
+export interface IUpdateProfilePayload {
+  location?: string;
+  phone?: string;
+  availabilityStatus?: boolean;
+  lastDonationDate?: string;
+}
+
+
 const getMyProfileFromDB = async (userId: string) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -17,10 +25,10 @@ const getMyProfileFromDB = async (userId: string) => {
       email: true,
       role: true,
       bloodGroup: true,
-      city: true,            
-      phoneNumber: true,     
-      isAvailable: true,     
-      lastDonatedAt: true,   
+      city: true,
+      phoneNumber: true,
+      isAvailable: true,
+      lastDonatedAt: true,
       createdAt: true,
       updatedAt: true,
     },
@@ -33,6 +41,52 @@ const getMyProfileFromDB = async (userId: string) => {
   return user;
 };
 
+
+const updateMyProfileInDB = async (
+  userId: string,
+  payload: IUpdateProfilePayload
+) => {
+  const isUserExist = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!isUserExist) {
+    throw new Error('User does not exist!');
+  }
+
+  const updateData: Record<string, any> = {};
+
+  if (payload.location !== undefined) updateData.city = payload.location;
+  if (payload.phone !== undefined) updateData.phoneNumber = payload.phone;
+  if (payload.availabilityStatus !== undefined) updateData.isAvailable = payload.availabilityStatus;
+  if (payload.lastDonationDate !== undefined) {
+    updateData.lastDonatedAt = new Date(payload.lastDonationDate);
+  }
+
+  const result = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: updateData,
+    select: {
+      id: true,
+      fullName: true,
+      email: true,
+      role: true,
+      bloodGroup: true,
+      city: true,
+      phoneNumber: true,
+      isAvailable: true,
+      lastDonatedAt: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return result;
+};
+
 export const UserService = {
   getMyProfileFromDB,
+  updateMyProfileInDB,
 };
