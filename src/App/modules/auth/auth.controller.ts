@@ -70,7 +70,7 @@ import { AuthService } from './auth.service.js';
 
 const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const result = await AuthService.registerUser(req.body);
+    const result = await AuthService.registerUserInDB(req.body);
     res.status(201).json({
       success: true,
       statusCode: 201,

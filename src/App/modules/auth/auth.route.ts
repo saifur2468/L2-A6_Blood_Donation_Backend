@@ -34,27 +34,22 @@
 
 
 import express from 'express';
-import { AuthController } from './auth.controller.js';
 import validateRequest from '../../middlewares/validateRequest.js';
-import { loginValidationSchema, registerValidationSchema } from './auth.validation.js';
+import { AuthValidation } from './auth.validation.js'; // 👈 এভাবে ইমপোর্ট করুন
+import { AuthController } from './auth.controller.js';
 
 const router = express.Router();
 
-// Register Route
 router.post(
   '/register',
-  validateRequest(registerValidationSchema),
+  validateRequest(AuthValidation.registerValidationSchema), // 👈 AuthValidation ব্যবহার করুন
   AuthController.registerUser
 );
 
-// Login Route
 router.post(
   '/login',
-  validateRequest(loginValidationSchema),
+  validateRequest(AuthValidation.loginValidationSchema), // 👈 AuthValidation ব্যবহার করুন
   AuthController.loginUser
 );
-
-
-router.post('/logout', AuthController.logoutUser);
 
 export const AuthRoutes = router;
