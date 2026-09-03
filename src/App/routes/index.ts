@@ -5,7 +5,7 @@ import { PaymentController } from '../modules/payment/payment.controller.js';
 
 const router = express.Router();
 
-// 🩸 Patient Blood Request Routes
+
 router.post(
   '/donation-request',
   auth('RECIPIENT', 'ADMIN'),
@@ -30,7 +30,7 @@ router.patch(
   DonationRequestController.completeRequest
 );
 
-// 💳 Stripe Payment Routes
+
 router.post(
   '/payments/stripe/initiate',
   auth('RECIPIENT', 'ADMIN'),
