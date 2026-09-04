@@ -158,6 +158,7 @@ export const UserScalarFieldEnum = {
   location: 'location',
   isAvailable: 'isAvailable',
   lastDonatedAt: 'lastDonatedAt',
+  isBlocked: 'isBlocked',
   isDeleted: 'isDeleted',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

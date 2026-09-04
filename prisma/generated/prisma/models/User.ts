@@ -37,6 +37,7 @@ export type UserMinAggregateOutputType = {
   location: string | null
   isAvailable: boolean | null
   lastDonatedAt: Date | null
+  isBlocked: boolean | null
   isDeleted: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -55,6 +56,7 @@ export type UserMaxAggregateOutputType = {
   location: string | null
   isAvailable: boolean | null
   lastDonatedAt: Date | null
+  isBlocked: boolean | null
   isDeleted: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -73,6 +75,7 @@ export type UserCountAggregateOutputType = {
   location: number
   isAvailable: number
   lastDonatedAt: number
+  isBlocked: number
   isDeleted: number
   createdAt: number
   updatedAt: number
@@ -93,6 +96,7 @@ export type UserMinAggregateInputType = {
   location?: true
   isAvailable?: true
   lastDonatedAt?: true
+  isBlocked?: true
   isDeleted?: true
   createdAt?: true
   updatedAt?: true
@@ -111,6 +115,7 @@ export type UserMaxAggregateInputType = {
   location?: true
   isAvailable?: true
   lastDonatedAt?: true
+  isBlocked?: true
   isDeleted?: true
   createdAt?: true
   updatedAt?: true
@@ -129,6 +134,7 @@ export type UserCountAggregateInputType = {
   location?: true
   isAvailable?: true
   lastDonatedAt?: true
+  isBlocked?: true
   isDeleted?: true
   createdAt?: true
   updatedAt?: true
@@ -220,6 +226,7 @@ export type UserGroupByOutputType = {
   location: string | null
   isAvailable: boolean
   lastDonatedAt: Date | null
+  isBlocked: boolean
   isDeleted: boolean
   createdAt: Date
   updatedAt: Date
@@ -259,6 +266,7 @@ export type UserWhereInput = {
   location?: Prisma.StringNullableFilter<"User"> | string | null
   isAvailable?: Prisma.BoolFilter<"User"> | boolean
   lastDonatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  isBlocked?: Prisma.BoolFilter<"User"> | boolean
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -282,6 +290,7 @@ export type UserOrderByWithRelationInput = {
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   lastDonatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isBlocked?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -308,6 +317,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   location?: Prisma.StringNullableFilter<"User"> | string | null
   isAvailable?: Prisma.BoolFilter<"User"> | boolean
   lastDonatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  isBlocked?: Prisma.BoolFilter<"User"> | boolean
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -331,6 +341,7 @@ export type UserOrderByWithAggregationInput = {
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   lastDonatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isBlocked?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -355,6 +366,7 @@ export type UserScalarWhereWithAggregatesInput = {
   location?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isAvailable?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   lastDonatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  isBlocked?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   isDeleted?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -373,6 +385,7 @@ export type UserCreateInput = {
   location?: string | null
   isAvailable?: boolean
   lastDonatedAt?: Date | string | null
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -396,6 +409,7 @@ export type UserUncheckedCreateInput = {
   location?: string | null
   isAvailable?: boolean
   lastDonatedAt?: Date | string | null
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -419,6 +433,7 @@ export type UserUpdateInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastDonatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -442,6 +457,7 @@ export type UserUncheckedUpdateInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastDonatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -465,6 +481,7 @@ export type UserCreateManyInput = {
   location?: string | null
   isAvailable?: boolean
   lastDonatedAt?: Date | string | null
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -483,6 +500,7 @@ export type UserUpdateManyMutationInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastDonatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -501,6 +519,7 @@ export type UserUncheckedUpdateManyInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastDonatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -524,6 +543,7 @@ export type UserCountOrderByAggregateInput = {
   location?: Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   lastDonatedAt?: Prisma.SortOrder
+  isBlocked?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -542,6 +562,7 @@ export type UserMaxOrderByAggregateInput = {
   location?: Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   lastDonatedAt?: Prisma.SortOrder
+  isBlocked?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -560,6 +581,7 @@ export type UserMinOrderByAggregateInput = {
   location?: Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   lastDonatedAt?: Prisma.SortOrder
+  isBlocked?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -660,6 +682,7 @@ export type UserCreateWithoutAuditLogsInput = {
   location?: string | null
   isAvailable?: boolean
   lastDonatedAt?: Date | string | null
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -682,6 +705,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   location?: string | null
   isAvailable?: boolean
   lastDonatedAt?: Date | string | null
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -720,6 +744,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastDonatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -742,6 +767,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastDonatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -764,6 +790,7 @@ export type UserCreateWithoutRequestsMadeInput = {
   location?: string | null
   isAvailable?: boolean
   lastDonatedAt?: Date | string | null
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -786,6 +813,7 @@ export type UserUncheckedCreateWithoutRequestsMadeInput = {
   location?: string | null
   isAvailable?: boolean
   lastDonatedAt?: Date | string | null
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -824,6 +852,7 @@ export type UserUpdateWithoutRequestsMadeInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastDonatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -846,6 +875,7 @@ export type UserUncheckedUpdateWithoutRequestsMadeInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastDonatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -868,6 +898,7 @@ export type UserCreateWithoutDonationsMadeInput = {
   location?: string | null
   isAvailable?: boolean
   lastDonatedAt?: Date | string | null
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -890,6 +921,7 @@ export type UserUncheckedCreateWithoutDonationsMadeInput = {
   location?: string | null
   isAvailable?: boolean
   lastDonatedAt?: Date | string | null
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -928,6 +960,7 @@ export type UserUpdateWithoutDonationsMadeInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastDonatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -950,6 +983,7 @@ export type UserUncheckedUpdateWithoutDonationsMadeInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastDonatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -972,6 +1006,7 @@ export type UserCreateWithoutNotificationsInput = {
   location?: string | null
   isAvailable?: boolean
   lastDonatedAt?: Date | string | null
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -994,6 +1029,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   location?: string | null
   isAvailable?: boolean
   lastDonatedAt?: Date | string | null
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1032,6 +1068,7 @@ export type UserUpdateWithoutNotificationsInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastDonatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1054,6 +1091,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastDonatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1076,6 +1114,7 @@ export type UserCreateWithoutPaymentsInput = {
   location?: string | null
   isAvailable?: boolean
   lastDonatedAt?: Date | string | null
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1098,6 +1137,7 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   location?: string | null
   isAvailable?: boolean
   lastDonatedAt?: Date | string | null
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1136,6 +1176,7 @@ export type UserUpdateWithoutPaymentsInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastDonatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1158,6 +1199,7 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastDonatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1247,6 +1289,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   location?: boolean
   isAvailable?: boolean
   lastDonatedAt?: boolean
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1271,6 +1314,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   location?: boolean
   isAvailable?: boolean
   lastDonatedAt?: boolean
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1289,6 +1333,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   location?: boolean
   isAvailable?: boolean
   lastDonatedAt?: boolean
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1307,12 +1352,13 @@ export type UserSelectScalar = {
   location?: boolean
   isAvailable?: boolean
   lastDonatedAt?: boolean
+  isBlocked?: boolean
   isDeleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "googleId" | "fullName" | "phoneNumber" | "role" | "bloodGroup" | "city" | "location" | "isAvailable" | "lastDonatedAt" | "isDeleted" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "googleId" | "fullName" | "phoneNumber" | "role" | "bloodGroup" | "city" | "location" | "isAvailable" | "lastDonatedAt" | "isBlocked" | "isDeleted" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   requestsMade?: boolean | Prisma.User$requestsMadeArgs<ExtArgs>
   donationsMade?: boolean | Prisma.User$donationsMadeArgs<ExtArgs>
@@ -1346,6 +1392,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     location: string | null
     isAvailable: boolean
     lastDonatedAt: Date | null
+    isBlocked: boolean
     isDeleted: boolean
     createdAt: Date
     updatedAt: Date
@@ -1789,6 +1836,7 @@ export interface UserFieldRefs {
   readonly location: Prisma.FieldRef<"User", 'String'>
   readonly isAvailable: Prisma.FieldRef<"User", 'Boolean'>
   readonly lastDonatedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly isBlocked: Prisma.FieldRef<"User", 'Boolean'>
   readonly isDeleted: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>

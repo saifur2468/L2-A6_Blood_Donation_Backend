@@ -26,6 +26,6 @@ export const seedAdmin = async () => {
         isAvailable: false,
       },
     });
-    console.log('⚡ Admin account created successfully!');
+    console.log(' Admin account created successfully!');
   }
 };
