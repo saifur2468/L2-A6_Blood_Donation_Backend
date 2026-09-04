@@ -8,16 +8,25 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 export const seedAdmin = async () => {
+ 
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+
+  if (!adminEmail || !adminPassword) {
+    console.error(' ADMIN_EMAIL or ADMIN_PASSWORD is missing in .env file!');
+    return;
+  }
+
   const isAdminExist = await prisma.user.findUnique({
-    where: { email: 'admin69@gmail.com' },
+    where: { email: adminEmail },
   });
 
   if (!isAdminExist) {
-    const hashedPassword = await bcrypt.hash('adminAB@##78', 10);
+    const hashedPassword = await bcrypt.hash(adminPassword, 10);
     await prisma.user.create({
       data: {
         fullName: 'System Admin',
-        email: 'admin69@gmail.com',
+        email: adminEmail,
         password: hashedPassword,
         role: Role.ADMIN,
         bloodGroup: BloodGroup.O_POSITIVE,
