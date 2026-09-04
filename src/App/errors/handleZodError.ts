@@ -12,7 +12,7 @@ export type TGenericErrorResponse = {
 };
 
 const handleZodError = (err: ZodError): TGenericErrorResponse => {
-  // (issue: ZodIssue) এর বদলে শুধু (issue) ব্যবহার করুন
+ 
   const errorSources: TErrorSources = err.issues.map((issue) => {
     const lastPath = issue.path[issue.path.length - 1];
 
