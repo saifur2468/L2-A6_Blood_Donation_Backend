@@ -127,7 +127,9 @@ const pool = new pg.Pool({ connectionString });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
-// ১. নতুন ব্লাড রিকোয়েস্ট তৈরি
+// ------------------- PATIENT SERVICES -------------------
+
+// ১. পেশেন্ট নতুন ব্লাড রিকোয়েস্ট তৈরি করবে
 const createBloodRequestInDB = async (patientId: string, payload: any) => {
   const result = await prisma.bloodRequest.create({
     data: {
@@ -145,7 +147,7 @@ const createBloodRequestInDB = async (patientId: string, payload: any) => {
   return result;
 };
 
-// ২. পেশেন্ট তার নিজের সব রিকোয়েস্ট দেখবে
+// ২. পেশেন্ট তার নিজের সব রিকোয়েস্ট এবং ডোনার রেসপন্স দেখবে
 const getMyRequestsFromDB = async (patientId: string) => {
   const result = await prisma.bloodRequest.findMany({
     where: {
@@ -157,6 +159,7 @@ const getMyRequestsFromDB = async (patientId: string) => {
         include: {
           donor: {
             select: {
+              id: true,
               fullName: true,
               phoneNumber: true,
               email: true,
@@ -172,7 +175,7 @@ const getMyRequestsFromDB = async (patientId: string) => {
   return result;
 };
 
-// ৩. পেশেন্ট নিজের কোনো রিকোয়েস্ট আপডেট করবে
+// ৩. পেশেন্ট তার রিকোয়েস্ট আপডেট করবে
 const updateMyRequestInDB = async (patientId: string, requestId: string, payload: any) => {
   const isExist = await prisma.bloodRequest.findFirst({
     where: { id: requestId, patientId, isDeleted: false },
@@ -193,7 +196,7 @@ const updateMyRequestInDB = async (patientId: string, requestId: string, payload
   return result;
 };
 
-// ৪. পেশেন্ট নিজের রিকোয়েস্ট ক্যানসেল/ডিলিট করবে
+// ৪. পেশেন্ট তার রিকোয়েস্ট ডিলিট/ক্যানসেল করবে
 const deleteMyRequestInDB = async (patientId: string, requestId: string) => {
   const isExist = await prisma.bloodRequest.findFirst({
     where: { id: requestId, patientId, isDeleted: false },
@@ -210,9 +213,73 @@ const deleteMyRequestInDB = async (patientId: string, requestId: string) => {
   return result;
 };
 
+
+// ------------------- DONOR SERVICES -------------------
+
+// ৫. ডোনার সব পেন্ডিং রিকোয়েস্টের তালিকা দেখবে
+const getAllPendingRequestsFromDB = async () => {
+  const result = await prisma.bloodRequest.findMany({
+    where: {
+      status: 'PENDING',
+      isDeleted: false,
+    },
+    include: {
+      patient: {
+        select: {
+          id: true,
+          fullName: true,
+          phoneNumber: true,
+          email: true,
+        },
+      },
+    },
+    orderBy: {
+      donatedAt: 'desc',
+    },
+  });
+  return result;
+};
+
+// ৬. ডোনার কোনো রিকোয়েস্ট Accept করবে (Transaction সহ)
+const acceptBloodRequestInDB = async (requestId: string, donorId: string) => {
+  const request = await prisma.bloodRequest.findUnique({
+    where: { id: requestId, isDeleted: false },
+  });
+
+  if (!request) {
+    throw new Error('Blood request not found!');
+  }
+
+  if (request.status !== 'PENDING') {
+    throw new Error('This blood request is no longer pending!');
+  }
+
+  // Transaction দিয়ে রিকোয়েস্ট APPROVED করা ও Donation টেবিলে রেকর্ড যুক্ত করা
+  const result = await prisma.$transaction(async (tx) => {
+    const updatedRequest = await tx.bloodRequest.update({
+      where: { id: requestId },
+      data: { status: 'IN_PROGRESS' },
+    });
+
+    const donation = await tx.donationRecord.create({
+      data: {
+        requestId: requestId,
+        donorId: donorId,
+        paymentStatus: 'PENDING',
+      },
+    });
+
+    return { updatedRequest, donation };
+  });
+
+  return result;
+};
+
 export const BloodRequestService = {
   createBloodRequestInDB,
   getMyRequestsFromDB,
   updateMyRequestInDB,
   deleteMyRequestInDB,
+  getAllPendingRequestsFromDB,
+  acceptBloodRequestInDB,
 };

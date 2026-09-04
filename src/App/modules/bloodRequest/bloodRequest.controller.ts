@@ -133,14 +133,15 @@
 
 
 
-
 import { Request, Response } from 'express';
 import catchAsync from '../../utils/catchAsync.js';
-import sendResponse from '../../utils/sendResponse.js';
+import sendResponse from '../../utils/sendResponse.js'; // 👈 'sendresponse.js' কে 'sendResponse.js' করা হয়েছে
 import { BloodRequestService } from './bloodRequest.service.js';
 
+// ------------------- PATIENT CONTROLLERS -------------------
+
 const createBloodRequest = catchAsync(async (req: Request, res: Response) => {
-  const patientId = req.user.id; // JWT টোকেন থেকে নেয়া id
+  const patientId = req.user.id;
   const result = await BloodRequestService.createBloodRequestInDB(patientId, req.body);
 
   sendResponse(res, {
@@ -189,9 +190,38 @@ const deleteMyRequest = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// ------------------- DONOR CONTROLLERS (যা মিসিং ছিল) -------------------
+
+const getAllPendingRequests = catchAsync(async (req: Request, res: Response) => {
+  const result = await BloodRequestService.getAllPendingRequestsFromDB();
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Pending blood requests retrieved successfully!',
+    data: result,
+  });
+});
+
+const acceptBloodRequest = catchAsync(async (req: Request, res: Response) => {
+  const donorId = req.user.id;
+  const { id: requestId } = req.params;
+
+  const result = await BloodRequestService.acceptBloodRequestInDB(requestId, donorId);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Blood request accepted successfully!',
+    data: result,
+  });
+});
+
 export const BloodRequestController = {
   createBloodRequest,
   getMyRequests,
   updateMyRequest,
   deleteMyRequest,
+  getAllPendingRequests,
+  acceptBloodRequest, 
 };

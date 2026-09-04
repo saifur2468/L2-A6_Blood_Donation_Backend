@@ -72,7 +72,9 @@ import { BloodRequestController } from './bloodRequest.controller.js';
 
 const router = express.Router();
 
-// ১. রিকোয়েস্ট তৈরি (PATIENT Only)
+// ------------------- PATIENT ROUTES -------------------
+
+// ১. পেশেন্ট রিকোয়েস্ট তৈরি করবে
 router.post(
   '/',
   auth('PATIENT'),
@@ -80,14 +82,14 @@ router.post(
   BloodRequestController.createBloodRequest
 );
 
-// ২. পেশেন্ট তার নিজের তৈরি করা রিকোয়েস্ট লিস্ট দেখবে (PATIENT Only)
+// ২. পেশেন্ট তার নিজের রিকোয়েস্ট লিস্ট দেখবে
 router.get(
   '/my-requests',
   auth('PATIENT'),
   BloodRequestController.getMyRequests
 );
 
-// ৩. পেশেন্ট তার রিকোয়েস্ট আপডেট করবে (PATIENT Only)
+// ৩. পেশেন্ট রিকোয়েস্ট আপডেট করবে
 router.patch(
   '/:id',
   auth('PATIENT'),
@@ -95,11 +97,27 @@ router.patch(
   BloodRequestController.updateMyRequest
 );
 
-// ৪. পেশেন্ট তার রিকোয়েস্ট ক্যানসেল করবে (PATIENT Only)
+// ৪. পেশেন্ট রিকোয়েস্ট ক্যানসেল/ডিলিট করবে
 router.delete(
   '/:id',
   auth('PATIENT'),
   BloodRequestController.deleteMyRequest
+);
+
+// ------------------- DONOR ROUTES -------------------
+
+// ৫. ডোনার সব পেন্ডিং রিকোয়েস্ট দেখবে
+router.get(
+  '/pending-requests',
+  auth('DONOR'),
+  BloodRequestController.getAllPendingRequests
+);
+
+// ৬. ডোনার রিকোয়েস্ট একসেপ্ট করবে
+router.patch(
+  '/:id/accept',
+  auth('DONOR'),
+  BloodRequestController.acceptBloodRequest
 );
 
 export const BloodRequestRoutes = router;

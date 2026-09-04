@@ -111,7 +111,8 @@ export const DonationRecordScalarFieldEnum = {
   id: 'id',
   requestId: 'requestId',
   donorId: 'donorId',
-  donatedAt: 'donatedAt'
+  donatedAt: 'donatedAt',
+  paymentStatus: 'paymentStatus'
 } as const
 
 export type DonationRecordScalarFieldEnum = (typeof DonationRecordScalarFieldEnum)[keyof typeof DonationRecordScalarFieldEnum]
