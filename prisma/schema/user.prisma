@@ -11,6 +11,7 @@ model User {
   location      String?
   isAvailable   Boolean     @default(true)
   lastDonatedAt DateTime?
+  profilePhoto  String?
   isBlocked     Boolean     @default(false)
   isDeleted     Boolean     @default(false)
   createdAt     DateTime    @default(now())

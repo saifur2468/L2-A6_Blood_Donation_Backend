@@ -7,10 +7,12 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 export interface IUpdateProfilePayload {
+  fullName?: string;
   location?: string;
   phone?: string;
   availabilityStatus?: boolean;
   lastDonationDate?: string;
+  profilePhoto?: string; 
 }
 
 export interface IDonorQueryFilters {
@@ -18,7 +20,6 @@ export interface IDonorQueryFilters {
   location?: string;
   availabilityStatus?: string | boolean;
 }
-
 
 const bloodGroupMap: Record<string, BloodGroup> = {
   'A+': BloodGroup.A_POSITIVE,
@@ -36,6 +37,7 @@ const getMyProfileFromDB = async (userId: string) => {
     where: {
       id: userId,
     },
+    
     select: {
       id: true,
       fullName: true,
@@ -45,6 +47,7 @@ const getMyProfileFromDB = async (userId: string) => {
       city: true,
       phoneNumber: true,
       isAvailable: true,
+      profilePhoto: true, 
       lastDonatedAt: true,
       createdAt: true,
       updatedAt: true,
@@ -72,9 +75,11 @@ const updateMyProfileInDB = async (
 
   const updateData: Record<string, any> = {};
 
+  if (payload.fullName !== undefined) updateData.fullName = payload.fullName;
   if (payload.location !== undefined) updateData.city = payload.location;
   if (payload.phone !== undefined) updateData.phoneNumber = payload.phone;
   if (payload.availabilityStatus !== undefined) updateData.isAvailable = payload.availabilityStatus;
+  if (payload.profilePhoto !== undefined) updateData.profilePhoto = payload.profilePhoto; // 👈 ৩. ডাটাবেজে ম্যাপিং যুক্ত করা হলো
   if (payload.lastDonationDate !== undefined) {
     updateData.lastDonatedAt = new Date(payload.lastDonationDate);
   }
@@ -93,6 +98,7 @@ const updateMyProfileInDB = async (
       city: true,
       phoneNumber: true,
       isAvailable: true,
+      profilePhoto: true, 
       lastDonatedAt: true,
       createdAt: true,
       updatedAt: true,
@@ -107,7 +113,6 @@ const getAllDonorsFromDB = async (filters: IDonorQueryFilters) => {
   const whereConditions: Record<string, any> = {};
 
   if (bloodGroup) {
-    // Accept both formats: "O+" (display) or "O_POSITIVE" (enum key) from the client.
     const normalized = bloodGroupMap[bloodGroup] ?? (bloodGroup as BloodGroup);
 
     if (!Object.values(BloodGroup).includes(normalized)) {
@@ -141,6 +146,7 @@ const getAllDonorsFromDB = async (filters: IDonorQueryFilters) => {
       city: true,
       phoneNumber: true,
       isAvailable: true,
+      profilePhoto: true,
       lastDonatedAt: true,
       createdAt: true,
       updatedAt: true,
