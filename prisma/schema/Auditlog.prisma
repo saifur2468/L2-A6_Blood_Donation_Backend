@@ -1,9 +1,44 @@
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  PATIENT
+  DONOR
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id           String     @id @default(uuid())
+  fullName     String
+  email        String     @unique
+  password     String
+  role         Role       @default(PATIENT)
+  isBlocked    Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  auditLogs    AuditLog[]
+}
+
+model BloodRequest {
+  id           String        @id @default(uuid())
+  patientId    String
+  hospitalName String
+  bloodGroup   String
+  bagsNeeded   Int
+  status       RequestStatus @default(PENDING)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
 model AuditLog {
   id        String   @id @default(uuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  action    String
-  entity    String
-  details   String
+  adminId   String
+  admin     User     @relation(fields: [adminId], references: [id])
+  action    String   
+  details   String  
   createdAt DateTime @default(now())
 }
