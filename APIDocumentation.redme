@@ -1,0 +1,935 @@
+Donor Api 
+ http://localhost:5000/api/v1/auth/register 
+{
+    "success": true,
+    "message": "User registered successfully",
+    "data": {
+        "id": "b1e1576b-d5f6-4f4d-ba81-268ac037258d",
+        "email": "donor.demo@gmail.com",
+        "fullName": "Saifur Rahman",
+        "phoneNumber": "01404260731",
+        "role": "DONOR",
+        "bloodGroup": "O_POSITIVE",
+        "city": "Dhaka",
+        "createdAt": "2026-09-02T05:11:19.989Z"
+    }
+}
+
+{
+    "success": true,
+    "message": "User registered successfully",
+    "data": {
+        "id": "d0bc706b-56dc-4828-9334-9e5e97c4e660",
+        "email": "saifali@gmail.com",
+        "fullName": "Saifur Rahman",
+        "phoneNumber": "01404260731",
+        "role": "DONOR",
+        "bloodGroup": "A_POSITIVE",
+        "city": "Dhaka",
+        "createdAt": "2026-09-02T05:38:29.708Z"
+    }
+}
+
+
+http://localhost:5000/api/v1/auth/login 
+{
+    "success": true,
+    "message": "User logged in successfully",
+    "data": {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0MWU4OWY3NS04YzViLTQ5OGYtYjJlZi1mZTVkMThkNjQ4N2YiLCJlbWFpbCI6InNha2liQGdtYWlsLmNvbSIsInJvbGUiOiJET05PUiIsImlhdCI6MTc4ODMyODAxNywiZXhwIjoxNzg4OTMyODE3fQ.LjZW377cyND25ekKppkRCIUoQvoqNeW8pLObwRKTQ3M",
+        "user": {
+            "id": "41e89f75-8c5b-498f-b2ef-fe5d18d6487f",
+            "email": "sakib@gmail.com",
+            "fullName": "Saifur Rahman",
+            "role": "DONOR"
+        }
+    }
+
+
+http://localhost:5000/api/v1/auth/logout 
+     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkxY2FiYTFmLWQxYzctNGM4Zi05MWFkLTU5YjE1ODE5MDg3NCIsImVtYWlsIjoia2FyaW1AZ21haWwuY29tIiwicm9sZSI6IlBBVElFTlQiLCJpYXQiOjE3ODgzMzIxMDAsImV4cCI6MTc4ODQxODUwMH0.MP01iKc8o9Cenw4ZTbUZ7v624liWq3vpM684mFgIst8"
+    }
+
+
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "User karim@gmail.com logged out successfully!"
+}
+
+
+Zod validation 
+
+{
+  "email": "saifali14gmail.com",
+  "password": "saif",
+  "fullName": "Saifur Rahman",
+  "phoneNumber": "01404260731",
+  "role": "DONOR",
+  "bloodGroup": "O_POSITIVE",
+  "city": "Dhaka",
+  "location": "Mirpur 10"
+}
+
+{
+    "success": false,
+    "message": "Validation Error",
+    "errorSources": [
+        {
+            "path": "email",
+            "message": "Invalid email address"
+        },
+        {
+            "path": "password",
+            "message": "Password must be at least 6 characters"
+        }
+    ],
+    "stack": null
+}
+
+
+http://localhost:5000/api/v1/user/me  
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Profile retrieved successfully!",
+    "data": {
+        "id": "91caba1f-d1c7-4c8f-91ad-59b158190874",
+        "fullName": "karim Rahman",
+        "email": "karim@gmail.com",
+        "role": "PATIENT",
+        "bloodGroup": null,
+        "city": null,
+        "phoneNumber": null,
+        "isAvailable": true,
+        "lastDonatedAt": null,
+        "createdAt": "2026-09-02T06:54:28.944Z",
+        "updatedAt": "2026-09-02T06:54:28.944Z"
+    }
+}
+
+http://localhost:5000/api/v1/user/me 
+
+    "success": true,
+    "statusCode": 200,
+    "message": "User profile updated successfully!",
+    "data": {
+        "id": "91caba1f-d1c7-4c8f-91ad-59b158190874",
+        "fullName": "karim Rahman",
+        "email": "karim@gmail.com",
+        "role": "PATIENT",
+        "bloodGroup": null,
+        "city": "Gazipur, Dhaka",
+        "phoneNumber": "01404260731",
+        "isAvailable": true,
+        "lastDonatedAt": "2026-05-20T00:00:00.000Z",
+        "createdAt": "2026-09-02T06:54:28.944Z",
+        "updatedAt": "2026-09-02T08:22:51.022Z"
+    }
+}
+
+
+http://localhost:5000/api/v1/user/donors  
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Donors retrieved successfully!",
+    "data": [
+        {
+            "id": "b1e1576b-d5f6-4f4d-ba81-268ac037258d",
+            "fullName": "Saifur Rahman",
+            "email": "donor.demo@gmail.com",
+            "role": "DONOR",
+            "bloodGroup": "O_POSITIVE",
+            "city": "Dhaka",
+            "phoneNumber": "01404260731",
+            "isAvailable": true,
+            "lastDonatedAt": null,
+            "createdAt": "2026-09-02T05:11:19.989Z",
+            "updatedAt": "2026-09-02T05:11:19.989Z"
+        },
+        {
+            "id": "b316c73e-f5ec-442c-a9fc-e36465a5d822",
+            "fullName": "Saifur Rahman",
+            "email": "donor.demogmail.com",
+            "role": "DONOR",
+            "bloodGroup": "O_POSITIVE",
+            "city": "Dhaka",
+            "phoneNumber": "01404260731",
+            "isAvailable": true,
+            "lastDonatedAt": null,
+            "createdAt": "2026-09-02T05:12:49.329Z",
+            "updatedAt": "2026-09-02T05:12:49.329Z"
+        },
+        {
+            "id": "d0bc706b-56dc-4828-9334-9e5e97c4e660",
+            "fullName": "Saifur Rahman",
+            "email": "saifali@gmail.com",
+            "role": "DONOR",
+            "bloodGroup": "A_POSITIVE",
+            "city": "Dhaka",
+            "phoneNumber": "01404260731",
+            "isAvailable": true,
+            "lastDonatedAt": null,
+            "createdAt": "2026-09-02T05:38:29.708Z",
+            "updatedAt": "2026-09-02T05:38:29.708Z"
+        },
+        {
+            "id": "41e89f75-8c5b-498f-b2ef-fe5d18d6487f",
+            "fullName": "Saifur Rahman",
+            "email": "sakib@gmail.com",
+            "role": "DONOR",
+            "bloodGroup": "A_POSITIVE",
+            "city": "Dhaka",
+            "phoneNumber": "01404260731",
+            "isAvailable": true,
+            "lastDonatedAt": null,
+            "createdAt": "2026-09-02T05:45:10.751Z",
+            "updatedAt": "2026-09-02T05:45:10.751Z"
+        },
+        {
+            "id": "9a4bba9d-885a-4ed5-9a25-26fc2186ec3f",
+            "fullName": "Rahim Rahman",
+            "email": "Rahim@gmail.com",
+            "role": "DONOR",
+            "bloodGroup": "A_POSITIVE",
+            "city": "Dhaka",
+            "phoneNumber": "01404260731",
+            "isAvailable": true,
+            "lastDonatedAt": null,
+            "createdAt": "2026-09-02T06:20:38.468Z",
+            "updatedAt": "2026-09-02T06:20:38.468Z"
+        },
+        {
+            "id": "8f206370-76f4-48d6-bcbe-ccb68bcde80b",
+            "fullName": "Rahim Rahman",
+            "email": "Rahima@gmail.com",
+            "role": "DONOR",
+            "bloodGroup": "A_POSITIVE",
+            "city": "Dhaka",
+            "phoneNumber": "01404260731",
+            "isAvailable": true,
+            "lastDonatedAt": null,
+            "createdAt": "2026-09-02T06:37:40.194Z",
+            "updatedAt": "2026-09-02T06:37:40.194Z"
+        },
+        {
+            "id": "e920c7f3-59b6-43c7-8fdb-a4ddc484e7db",
+            "fullName": "Saifur Rahman",
+            "email": "saifali14@gmail.com",
+            "role": "DONOR",
+            "bloodGroup": "O_POSITIVE",
+            "city": "Dhaka",
+            "phoneNumber": "01404260731",
+            "isAvailable": true,
+            "lastDonatedAt": null,
+            "createdAt": "2026-09-02T06:59:56.840Z",
+            "updatedAt": "2026-09-02T06:59:56.840Z"
+        },
+        {
+            "id": "91caba1f-d1c7-4c8f-91ad-59b158190874",
+            "fullName": "karim Rahman",
+            "email": "karim@gmail.com",
+            "role": "PATIENT",
+            "bloodGroup": null,
+            "city": "Gazipur, Dhaka",
+            "phoneNumber": "01404260731",
+            "isAvailable": true,
+            "lastDonatedAt": "2026-05-20T00:00:00.000Z",
+            "createdAt": "2026-09-02T06:54:28.944Z",
+            "updatedAt": "2026-09-02T08:22:51.022Z"
+        }
+    ]
+}
+
+http://localhost:5000/api/v1/user/donors?bloodGroup=O%2B 
+
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Donors retrieved successfully!",
+    "data": [
+        {
+            "id": "b1e1576b-d5f6-4f4d-ba81-268ac037258d",
+            "fullName": "Saifur Rahman",
+            "email": "donor.demo@gmail.com",
+            "role": "DONOR",
+            "bloodGroup": "O_POSITIVE",
+            "city": "Dhaka",
+            "phoneNumber": "01404260731",
+            "isAvailable": true,
+            "lastDonatedAt": null,
+            "createdAt": "2026-09-02T05:11:19.989Z",
+            "updatedAt": "2026-09-02T05:11:19.989Z"
+        },
+        {
+            "id": "b316c73e-f5ec-442c-a9fc-e36465a5d822",
+            "fullName": "Saifur Rahman",
+            "email": "donor.demogmail.com",
+            "role": "DONOR",
+            "bloodGroup": "O_POSITIVE",
+            "city": "Dhaka",
+            "phoneNumber": "01404260731",
+            "isAvailable": true,
+            "lastDonatedAt": null,
+            "createdAt": "2026-09-02T05:12:49.329Z",
+            "updatedAt": "2026-09-02T05:12:49.329Z"
+        },
+        {
+            "id": "e920c7f3-59b6-43c7-8fdb-a4ddc484e7db",
+            "fullName": "Saifur Rahman",
+            "email": "saifali14@gmail.com",
+            "role": "DONOR",
+            "bloodGroup": "O_POSITIVE",
+            "city": "Dhaka",
+            "phoneNumber": "01404260731",
+            "isAvailable": true,
+            "lastDonatedAt": null,
+            "createdAt": "2026-09-02T06:59:56.840Z",
+            "updatedAt": "2026-09-02T06:59:56.840Z"
+        }
+    ]
+}
+
+http://localhost:5000/api/v1/user/donors?location=Gazipur 
+
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Donors retrieved successfully!",
+    "data": [
+        {
+            "id": "91caba1f-d1c7-4c8f-91ad-59b158190874",
+            "fullName": "karim Rahman",
+            "email": "karim@gmail.com",
+            "role": "PATIENT",
+            "bloodGroup": null,
+            "city": "Gazipur, Dhaka",
+            "phoneNumber": "01404260731",
+            "isAvailable": true,
+            "lastDonatedAt": "2026-05-20T00:00:00.000Z",
+            "createdAt": "2026-09-02T06:54:28.944Z",
+            "updatedAt": "2026-09-02T08:22:51.022Z"
+        }
+    ]
+}
+
+
+http://localhost:5000/api/v1/blood-request 
+{
+    "success": true,
+    "statusCode": 201,
+    "message": "Blood donation request created successfully!",
+    "data": {
+        "id": "4b668192-1cb3-4f65-b03f-663c55622088",
+        "patientId": "76547807-1b8f-4bf9-841e-4830536c0ca2",
+        "bloodGroup": "O_POSITIVE",
+        "bagsNeeded": 2,
+        "hospitalName": "Dhaka Medical College Hospital",
+        "hospitalAddress": "Secretariat Road, Dhaka",
+        "city": "Dhaka",
+        "urgency": "CRITICAL",
+        "status": "PENDING",
+        "contactNumber": "01700000000",
+        "neededBy": "2026-09-05T10:00:00.000Z",
+        "isDeleted": false,
+        "createdAt": "2026-09-02T15:51:28.465Z",
+        "updatedAt": "2026-09-02T15:51:28.465Z",
+        "patient": {
+            "id": "76547807-1b8f-4bf9-841e-4830536c0ca2",
+            "fullName": "Patient User",
+            "email": "patient.test@gmail.com",
+            "phoneNumber": "01700000000"
+        }
+    }
+}
+
+
+http://localhost:5000/api/v1/blood-request/my-requests 
+{
+    "success": true,
+    "message": "My blood requests retrieved successfully!",
+    "data": [
+        {
+            "id": "249057b8-3ff7-4721-b25c-4f1b1e7a2b07",
+            "patientId": "5596bfdf-1d89-4a4e-8a3e-13f7ea700fc9",
+            "bloodGroup": "A_POSITIVE",
+            "bagsNeeded": 5,
+            "hospitalName": "Dhaka Medical College Hospital",
+            "hospitalAddress": "Mirpur Dosh Road, Dhaka",
+            "city": "Dhaka",
+            "urgency": "CRITICAL",
+            "status": "PENDING",
+            "contactNumber": "01700000000",
+            "neededBy": "2026-09-05T10:00:00.000Z",
+            "isDeleted": false,
+            "createdAt": "2026-09-03T13:55:06.351Z",
+            "updatedAt": "2026-09-03T13:55:06.351Z",
+            "donations": []
+        }
+    ]
+}
+
+http://localhost:5000/api/v1/blood-request/249057b8-3ff7-4721-b25c-4f1b1e7a2b07 
+{
+    "success": true,
+    "message": "Blood request updated successfully!",
+    "data": {
+        "id": "249057b8-3ff7-4721-b25c-4f1b1e7a2b07",
+        "patientId": "5596bfdf-1d89-4a4e-8a3e-13f7ea700fc9",
+        "bloodGroup": "A_POSITIVE",
+        "bagsNeeded": 10,
+        "hospitalName": "Dhaka Medical College Hospital",
+        "hospitalAddress": "Mirpur Dosh Road, Dhaka",
+        "city": "Dhaka",
+        "urgency": "URGENT",
+        "status": "PENDING",
+        "contactNumber": "01700000000",
+        "neededBy": "2026-09-05T10:00:00.000Z",
+        "isDeleted": false,
+        "createdAt": "2026-09-03T13:55:06.351Z",
+        "updatedAt": "2026-09-03T14:02:21.926Z"
+    }
+}
+
+http://localhost:5000/api/v1/blood-request/249057b8-3ff7-4721-b25c-4f1b1e7a2b07 
+{
+    "success": true,
+    "message": "Blood request deleted successfully!",
+    "data": {
+        "id": "249057b8-3ff7-4721-b25c-4f1b1e7a2b07",
+        "patientId": "5596bfdf-1d89-4a4e-8a3e-13f7ea700fc9",
+        "bloodGroup": "A_POSITIVE",
+        "bagsNeeded": 10,
+        "hospitalName": "Dhaka Medical College Hospital",
+        "hospitalAddress": "Mirpur Dosh Road, Dhaka",
+        "city": "Dhaka",
+        "urgency": "URGENT",
+        "status": "PENDING",
+        "contactNumber": "01700000000",
+        "neededBy": "2026-09-05T10:00:00.000Z",
+        "isDeleted": true,
+        "createdAt": "2026-09-03T13:55:06.351Z",
+        "updatedAt": "2026-09-03T14:04:59.492Z"
+    }
+}
+
+http://localhost:5000/api/v1/blood-request/pending-requests 
+{
+    "success": true,
+    "message": "Pending blood requests retrieved successfully!",
+    "data": [
+        {
+            "id": "c3bf7987-5448-4af1-aaa4-d5a900d41c4a",
+            "patientId": "e9be2831-35dc-47bd-9a5d-3737681b3fd2",
+            "bloodGroup": "B_POSITIVE",
+            "bagsNeeded": 5,
+            "hospitalName": "Dhaka Medical College Hospital",
+            "hospitalAddress": "Mirpur Dosh Road, Dhaka",
+            "city": "Dhaka",
+            "urgency": "CRITICAL",
+            "status": "PENDING",
+            "contactNumber": "01700000000",
+            "neededBy": "2026-09-05T10:00:00.000Z",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T16:30:29.445Z",
+            "updatedAt": "2026-09-02T16:30:29.445Z",
+            "patient": {
+                "id": "e9be2831-35dc-47bd-9a5d-3737681b3fd2",
+                "fullName": "Karima Rahman",
+                "phoneNumber": "01711112222",
+                "email": "karimadonor@gmail.com"
+            }
+        },
+        {
+            "id": "3771beb0-9141-422e-99a6-44bd6eba2962",
+            "patientId": "e9be2831-35dc-47bd-9a5d-3737681b3fd2",
+            "bloodGroup": "B_POSITIVE",
+            "bagsNeeded": 5,
+            "hospitalName": "Dhaka Medical College Hospital",
+            "hospitalAddress": "Mirpur Dosh Road, Dhaka",
+            "city": "Dhaka",
+            "urgency": "CRITICAL",
+            "status": "PENDING",
+            "contactNumber": "01700000000",
+            "neededBy": "2026-09-05T10:00:00.000Z",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T16:29:28.003Z",
+            "updatedAt": "2026-09-02T16:29:28.003Z",
+            "patient": {
+                "id": "e9be2831-35dc-47bd-9a5d-3737681b3fd2",
+                "fullName": "Karima Rahman",
+                "phoneNumber": "01711112222",
+                "email": "karimadonor@gmail.com"
+            }
+        },
+        {
+            "id": "13d747cc-4bbd-47ca-b547-cc7eb2b52bec",
+            "patientId": "76547807-1b8f-4bf9-841e-4830536c0ca2",
+            "bloodGroup": "B_POSITIVE",
+            "bagsNeeded": 5,
+            "hospitalName": "Dhaka Medical College Hospital",
+            "hospitalAddress": "Mirpur Dosh Road, Dhaka",
+            "city": "Dhaka",
+            "urgency": "CRITICAL",
+            "status": "PENDING",
+            "contactNumber": "01700000000",
+            "neededBy": "2026-09-05T10:00:00.000Z",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T16:01:02.712Z",
+            "updatedAt": "2026-09-02T16:01:02.712Z",
+            "patient": {
+                "id": "76547807-1b8f-4bf9-841e-4830536c0ca2",
+                "fullName": "Patient User",
+                "phoneNumber": "01700000000",
+                "email": "patient.test@gmail.com"
+            }
+        },
+        {
+            "id": "6751755e-a8d1-4d05-8c16-204590a53036",
+            "patientId": "76547807-1b8f-4bf9-841e-4830536c0ca2",
+            "bloodGroup": "A_POSITIVE",
+            "bagsNeeded": 1,
+            "hospitalName": "Dhaka Medical College Hospital",
+            "hospitalAddress": "Secretariat Road, Dhaka",
+            "city": "Dhaka",
+            "urgency": "CRITICAL",
+            "status": "PENDING",
+            "contactNumber": "01700000000",
+            "neededBy": "2026-09-05T10:00:00.000Z",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T16:00:21.590Z",
+            "updatedAt": "2026-09-02T16:00:21.590Z",
+            "patient": {
+                "id": "76547807-1b8f-4bf9-841e-4830536c0ca2",
+                "fullName": "Patient User",
+                "phoneNumber": "01700000000",
+                "email": "patient.test@gmail.com"
+            }
+        },
+        {
+            "id": "4b668192-1cb3-4f65-b03f-663c55622088",
+            "patientId": "76547807-1b8f-4bf9-841e-4830536c0ca2",
+            "bloodGroup": "O_POSITIVE",
+            "bagsNeeded": 2,
+            "hospitalName": "Dhaka Medical College Hospital",
+            "hospitalAddress": "Secretariat Road, Dhaka",
+            "city": "Dhaka",
+            "urgency": "CRITICAL",
+            "status": "PENDING",
+            "contactNumber": "01700000000",
+            "neededBy": "2026-09-05T10:00:00.000Z",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T15:51:28.465Z",
+            "updatedAt": "2026-09-02T15:51:28.465Z",
+            "patient": {
+                "id": "76547807-1b8f-4bf9-841e-4830536c0ca2",
+                "fullName": "Patient User",
+                "phoneNumber": "01700000000",
+                "email": "patient.test@gmail.com"
+            }
+        }
+    ]
+}
+
+http://localhost:5000/api/v1/blood-request/4b668192-1cb3-4f65-b03f-663c55622088/accept 
+
+{
+    "success": true,
+    "message": "Blood request accepted successfully!",
+    "data": {
+        "updatedRequest": {
+            "id": "4b668192-1cb3-4f65-b03f-663c55622088",
+            "patientId": "76547807-1b8f-4bf9-841e-4830536c0ca2",
+            "bloodGroup": "O_POSITIVE",
+            "bagsNeeded": 2,
+            "hospitalName": "Dhaka Medical College Hospital",
+            "hospitalAddress": "Secretariat Road, Dhaka",
+            "city": "Dhaka",
+            "urgency": "CRITICAL",
+            "status": "IN_PROGRESS",
+            "contactNumber": "01700000000",
+            "neededBy": "2026-09-05T10:00:00.000Z",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T15:51:28.465Z",
+            "updatedAt": "2026-09-03T14:45:29.962Z"
+        },
+        "donation": {
+            "id": "a3de299c-3a16-48b2-85e4-8a1340a22593",
+            "requestId": "4b668192-1cb3-4f65-b03f-663c55622088",
+            "donorId": "137d1391-128f-4170-ab69-fde0545c5034",
+            "donatedAt": "2026-09-03T14:45:30.165Z"
+        }
+    }
+}
+
+
+http://localhost:5000/api/v1/payment/create-checkout 
+{
+    "success": true,
+    "message": "Checkout session created successfully",
+    "data": {
+        "sessionId": "cs_test_a1HoCJeJ9exnSxuto5TlGGKOttDQi3vvxUXc058PXn7oQSp1Ab0Mc1S6Op",
+        "paymentUrl": "https://checkout.stripe.com/c/pay/cs_test_a1HoCJeJ9exnSxuto5TlGGKOttDQi3vvxUXc058PXn7oQSp1Ab0Mc1S6Op#fidnandhYHdWcXxpYCc%2FJ2FgY2RwaXEnKSdicGRmZGhqaWBTZHdsZGtxJz8nZmprcXdqaScpJ2R1bE5gfCc%2FJ3VuWnFgdnFaMDRRdEd9YUBJTVBKTX9JXGhSY1VhS21BcUJDNEBDPGFBa2wzQkJJajB%2FV0dTR2JLaDx%2FQVFzSk5IUnx3dj09R0FvcE9uUkB3STZJRkRTZDNIZ0FVcl9yRmI1NXNhPH81NGg9JyknY3dqaFZgd3Ngdyc%2FcXdwYCknZ2RmbmJ3anBrYUZqaWp3Jz8nJmNjY2NjYycpJ2lkfGpwcVF8dWAnPyd2bGtiaWBabHFgaCcpJ2BrZGdpYFVpZGZgbWppYWB3dic%2FcXdwYHgl"
+    }
+}
+
+http://localhost:5000/api/v1/payment/my-history 
+{
+    "success": true,
+    "message": "Payment history retrieved successfully",
+    "data": [
+        {
+            "id": "e4e5ef5e-13b4-4b92-938c-b2ba8c481c43",
+            "requestId": "284aa43c-0b5a-432c-9683-b61ac40f0096",
+            "donorId": "95323369-da48-4ddc-9f61-f5e0ac8ede5f",
+            "donatedAt": "2026-09-03T16:09:08.133Z",
+            "paymentStatus": "PAID",
+            "request": {
+                "bloodGroup": "B_POSITIVE",
+                "hospitalName": "Saifur Digital Hospital",
+                "bagsNeeded": 5
+            },
+            "donor": {
+                "fullName": "Kamrul Hasan",
+                "phoneNumber": "01700000000",
+                "email": "kamrul@gmail.com"
+            }
+        }
+    ]
+}
+
+http://localhost:5000/api/v1/blood-request/my-requests 
+{
+    "success": true,
+    "message": "My blood requests retrieved successfully!",
+    "data": [
+        {
+            "id": "284aa43c-0b5a-432c-9683-b61ac40f0096",
+            "patientId": "89b86ad8-ded1-4d38-9332-67114bdf0a40",
+            "bloodGroup": "B_POSITIVE",
+            "bagsNeeded": 5,
+            "hospitalName": "Saifur Digital Hospital",
+            "hospitalAddress": "gazipur, Dhaka",
+            "city": "Dhaka",
+            "urgency": "CRITICAL",
+            "status": "IN_PROGRESS",
+            "contactNumber": "01700000000",
+            "neededBy": "2026-09-05T10:00:00.000Z",
+            "isDeleted": false,
+            "createdAt": "2026-09-03T16:04:45.473Z",
+            "updatedAt": "2026-09-03T16:09:08.030Z",
+            "donations": [
+                {
+                    "id": "e4e5ef5e-13b4-4b92-938c-b2ba8c481c43",
+                    "requestId": "284aa43c-0b5a-432c-9683-b61ac40f0096",
+                    "donorId": "95323369-da48-4ddc-9f61-f5e0ac8ede5f",
+                    "donatedAt": "2026-09-03T16:09:08.133Z",
+                    "paymentStatus": "PAID",
+                    "donor": {
+                        "id": "95323369-da48-4ddc-9f61-f5e0ac8ede5f",
+                        "fullName": "Kamrul Hasan",
+                        "phoneNumber": "01700000000",
+                        "email": "kamrul@gmail.com"
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+http://localhost:5000/api/v1/admin/users 
+{
+    "success": true,
+    "message": "Users retrieved successfully",
+    "data": [
+        {
+            "id": "c6c37495-8a42-4e9d-a16a-f5aed1ee95b0",
+            "fullName": "System Admin",
+            "email": "admin69@gmail.com",
+            "role": "ADMIN",
+            "isDeleted": false,
+            "createdAt": "2026-09-04T13:31:57.325Z"
+        },
+        {
+            "id": "95323369-da48-4ddc-9f61-f5e0ac8ede5f",
+            "fullName": "Kamrul Hasan",
+            "email": "kamrul@gmail.com",
+            "role": "DONOR",
+            "isDeleted": false,
+            "createdAt": "2026-09-03T16:05:57.325Z"
+        },
+        {
+            "id": "89b86ad8-ded1-4d38-9332-67114bdf0a40",
+            "fullName": "Wasif Hasan",
+            "email": "WasifHasan@gmail.com",
+            "role": "PATIENT",
+            "isDeleted": false,
+            "createdAt": "2026-09-03T16:03:13.013Z"
+        },
+        {
+            "id": "137d1391-128f-4170-ab69-fde0545c5034",
+            "fullName": "Sajib Donor",
+            "email": "donor@gmail.com",
+            "role": "DONOR",
+            "isDeleted": false,
+            "createdAt": "2026-09-03T14:29:00.934Z"
+        },
+        {
+            "id": "5596bfdf-1d89-4a4e-8a3e-13f7ea700fc9",
+            "fullName": "Karima Rahman",
+            "email": "sakib2@gmail.com",
+            "role": "PATIENT",
+            "isDeleted": false,
+            "createdAt": "2026-09-03T13:52:51.996Z"
+        },
+        {
+            "id": "e9be2831-35dc-47bd-9a5d-3737681b3fd2",
+            "fullName": "Karima Rahman",
+            "email": "karimadonor@gmail.com",
+            "role": "DONOR",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T16:27:39.195Z"
+        },
+        {
+            "id": "76547807-1b8f-4bf9-841e-4830536c0ca2",
+            "fullName": "Patient User",
+            "email": "patient.test@gmail.com",
+            "role": "DONOR",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T15:19:25.035Z"
+        },
+        {
+            "id": "fd4f5698-65eb-4591-92c7-e7ce8453f61a",
+            "fullName": "Md Saidur Rahman",
+            "email": "sadiur14@gmail.com",
+            "role": "DONOR",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T14:47:05.254Z"
+        },
+        {
+            "id": "30dc7331-7ad4-4ef6-badf-d85ea0af5ee7",
+            "fullName": "Md Saifur Rahman",
+            "email": "saifur.devweb@gmail.com",
+            "role": "DONOR",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T14:11:24.662Z"
+        },
+        {
+            "id": "e920c7f3-59b6-43c7-8fdb-a4ddc484e7db",
+            "fullName": "Saifur Rahman",
+            "email": "saifali14@gmail.com",
+            "role": "DONOR",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T06:59:56.840Z"
+        },
+        {
+            "id": "91caba1f-d1c7-4c8f-91ad-59b158190874",
+            "fullName": "karim Rahman",
+            "email": "karim@gmail.com",
+            "role": "PATIENT",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T06:54:28.944Z"
+        },
+        {
+            "id": "8f206370-76f4-48d6-bcbe-ccb68bcde80b",
+            "fullName": "Rahim Rahman",
+            "email": "Rahima@gmail.com",
+            "role": "DONOR",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T06:37:40.194Z"
+        },
+        {
+            "id": "9a4bba9d-885a-4ed5-9a25-26fc2186ec3f",
+            "fullName": "Rahim Rahman",
+            "email": "Rahim@gmail.com",
+            "role": "DONOR",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T06:20:38.468Z"
+        },
+        {
+            "id": "41e89f75-8c5b-498f-b2ef-fe5d18d6487f",
+            "fullName": "Saifur Rahman",
+            "email": "sakib@gmail.com",
+            "role": "DONOR",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T05:45:10.751Z"
+        },
+        {
+            "id": "d0bc706b-56dc-4828-9334-9e5e97c4e660",
+            "fullName": "Saifur Rahman",
+            "email": "saifali@gmail.com",
+            "role": "DONOR",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T05:38:29.708Z"
+        },
+        {
+            "id": "b316c73e-f5ec-442c-a9fc-e36465a5d822",
+            "fullName": "Saifur Rahman",
+            "email": "donor.demogmail.com",
+            "role": "DONOR",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T05:12:49.329Z"
+        },
+        {
+            "id": "b1e1576b-d5f6-4f4d-ba81-268ac037258d",
+            "fullName": "Saifur Rahman",
+            "email": "donor.demo@gmail.com",
+            "role": "DONOR",
+            "isDeleted": false,
+            "createdAt": "2026-09-02T05:11:19.989Z"
+        }
+    ]
+}
+
+
+http://localhost:5000/api/v1/admin/users/b1e1576b-d5f6-4f4d-ba81-268ac037258d/role 
+
+{
+    "success": true,
+    "message": "User role updated successfully",
+    "data": {
+        "id": "b1e1576b-d5f6-4f4d-ba81-268ac037258d",
+        "email": "donor.demo@gmail.com",
+        "password": "$2b$12$SHIWFUlU0lZHNs0HQlWSEuBAut/HGm7fDen28zrvkcc14XXzkSMxS",
+        "googleId": null,
+        "fullName": "Saifur Rahman",
+        "phoneNumber": "01404260731",
+        "role": "DONOR",
+        "bloodGroup": "O_POSITIVE",
+        "city": "Dhaka",
+        "location": "Mirpur 10",
+        "isAvailable": true,
+        "lastDonatedAt": null,
+        "isBlocked": false,
+        "isDeleted": false,
+        "createdAt": "2026-09-02T05:11:19.989Z",
+        "updatedAt": "2026-09-04T14:08:12.506Z"
+    }
+}
+
+http://localhost:5000/api/v1/admin/users/8f206370-76f4-48d6-bcbe-ccb68bcde80b/block 
+{
+    "success": true,
+    "message": "User blocked successfully",
+    "data": {
+        "id": "8f206370-76f4-48d6-bcbe-ccb68bcde80b",
+        "email": "Rahima@gmail.com",
+        "password": "$2b$10$KmwAoZxE3CcBwDXByjRt3eiRqPWMAdSdy.hR5YGKGZjH7cIyxI0aq",
+        "googleId": null,
+        "fullName": "Rahim Rahman",
+        "phoneNumber": "01404260731",
+        "role": "DONOR",
+        "bloodGroup": "A_POSITIVE",
+        "city": "Dhaka",
+        "location": "Mirpur 10",
+        "isAvailable": true,
+        "lastDonatedAt": null,
+        "isBlocked": true,
+        "isDeleted": false,
+        "createdAt": "2026-09-02T06:37:40.194Z",
+        "updatedAt": "2026-09-04T14:12:15.280Z"
+    }
+}
+
+
+http://localhost:5000/api/v1/admin/blood-requests/9177496e-1d3c-4d82-a94f-5355e013de15/status 
+  {  "success": true,
+    "message": "Blood request verified successfully",
+    "data": {
+        "id": "9177496e-1d3c-4d82-a94f-5355e013de15",
+        "patientId": "89b86ad8-ded1-4d38-9332-67114bdf0a40",
+        "bloodGroup": "B_POSITIVE",
+        "bagsNeeded": 5,
+        "hospitalName": "Saifur Digital Hospital",
+        "hospitalAddress": "gazipur, Dhaka",
+        "city": "Dhaka",
+        "urgency": "CRITICAL",
+        "status": "VERIFIED",
+        "contactNumber": "01700000000",
+        "neededBy": "2026-09-05T10:00:00.000Z",
+        "isDeleted": false,
+        "createdAt": "2026-09-04T14:14:07.181Z",
+        "updatedAt": "2026-09-04T14:17:02.674Z"
+    }
+}
+
+http://localhost:5000/api/v1/admin/reports 
+{
+    "success": true,
+    "message": "System report retrieved successfully",
+    "data": {
+        "totalUsers": 17,
+        "totalDonors": 13,
+        "totalPatients": 3,
+        "totalBloodRequests": 8,
+        "pendingRequests": 5,
+        "approvedRequests": 8
+    }
+}
+
+http://localhost:5000/api/v1/admin/audit-logs 
+
+{
+    "success": true,
+    "message": "Audit logs retrieved successfully",
+    "data": [
+        {
+            "id": "c73d2655-982d-4105-97af-b476b5486776",
+            "userId": "c6c37495-8a42-4e9d-a16a-f5aed1ee95b0",
+            "action": "BLOOD_REQUEST_VERIFIED",
+            "entity": "BLOOD_REQUEST",
+            "details": "Blood request 9177496e-1d3c-4d82-a94f-5355e013de15 status updated to VERIFIED.",
+            "createdAt": "2026-09-04T14:17:03.347Z",
+            "user": {
+                "fullName": "System Admin",
+                "email": "admin69@gmail.com"
+            }
+        },
+        {
+            "id": "d8cf247c-079f-42dc-a4e6-7ed7f9577e9b",
+            "userId": "c6c37495-8a42-4e9d-a16a-f5aed1ee95b0",
+            "action": "USER_BLOCKED",
+            "entity": "USER",
+            "details": "User Rahima@gmail.com was blocked.",
+            "createdAt": "2026-09-04T14:12:15.839Z",
+            "user": {
+                "fullName": "System Admin",
+                "email": "admin69@gmail.com"
+            }
+        },
+        {
+            "id": "e7b3ec0b-e088-4022-8a4a-df8aaec91e05",
+            "userId": "c6c37495-8a42-4e9d-a16a-f5aed1ee95b0",
+            "action": "USER_ROLE_UPDATED",
+            "entity": "USER",
+            "details": "User donor.demo@gmail.com role changed to DONOR.",
+            "createdAt": "2026-09-04T14:08:13.379Z",
+            "user": {
+                "fullName": "System Admin",
+                "email": "admin69@gmail.com"
+            }
+        }
+    ]
+}
+http://localhost:5000/api/v1/user/update-profile  
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Profile photo and info updated successfully!",
+    "data": {
+        "id": "95323369-da48-4ddc-9f61-f5e0ac8ede5f",
+        "fullName": "Kamrul Hasan",
+        "email": "kamrul@gmail.com",
+        "role": "DONOR",
+        "bloodGroup": "B_POSITIVE",
+        "city": "Dhaka",
+        "phoneNumber": "01700000000",
+        "isAvailable": true,
+        "profilePhoto": "https://res.cloudinary.com/bcegtopp/image/upload/v1788534831/blood_donation_app/profile-95323369-da48-4ddc-9f61-f5e0ac8ede5f-1788534828991.jpg",
+        "lastDonatedAt": null,
+        "createdAt": "2026-09-03T16:05:57.325Z",
+        "updatedAt": "2026-09-04T15:13:51.999Z"
+    }
+}
+
