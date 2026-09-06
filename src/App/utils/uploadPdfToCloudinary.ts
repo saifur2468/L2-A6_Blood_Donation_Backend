@@ -9,11 +9,11 @@ export const uploadPdfBufferToCloudinary = (
       {
         resource_type: 'raw',
         folder: 'payment-receipts',
-        public_id: `${fileName}.pdf`, // 👈 format: 'pdf' বাদ দিয়ে এখানে .pdf দেওয়া নিশ্চিত করুন
+        public_id: `${fileName}.pdf`, 
       },
       (error, result) => {
         if (error || !result) {
-          console.error('❌ Cloudinary Upload Error Details:', error);
+          console.error(' Cloudinary Upload Error Details:', error);
           return reject(error || new Error('Cloudinary upload failed'));
         }
         resolve(result.secure_url);

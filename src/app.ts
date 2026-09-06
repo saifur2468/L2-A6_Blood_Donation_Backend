@@ -11,11 +11,11 @@ import globalErrorHandler from './App/middlewares/globalErrorHandler.js';
 
 const app = express();
 
-// Security
+
 app.use(cors());
 app.use(helmet());
 
-// Stripe Webhook: express.json() এর আগেই Raw Body হিসেবে মাউন্ট করতে হবে
+
 app.use(
   '/api/v1/payment/webhook',
   express.raw({ type: 'application/json' })
@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1/auth', AuthRoutes);
 app.use('/api/v1/user', UserRoutes);
 app.use('/api/v1/blood-request', BloodRequestRoutes);
-app.use('/api/v1/payment', PaymentRoutes); // 👈 Webhook Route PaymentRoutes এর ভেতরেই ম্যাপ করা থাকবে
+app.use('/api/v1/payment', PaymentRoutes); 
 app.use('/api/v1/admin', AdminRoutes);
 
 // Test Route
@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// Global Error Handler
+
 app.use(globalErrorHandler);
 
 export default app;

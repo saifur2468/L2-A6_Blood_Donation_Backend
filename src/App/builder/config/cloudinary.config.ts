@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from 'cloudinary';
 import multer from 'multer';
 
-// Cloudinary configuration
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -14,11 +14,11 @@ const storage = multer.memoryStorage();
 export const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 5 * 1024 * 1024, // 5MB limit
+    fileSize: 5 * 1024 * 1024, 
   },
 });
 
-// 👈 এই ফাংশনটি ইমপোর্ট করার চেষ্টা করছিলেন, তাই এটি এক্সপোর্ট করা আবশ্যক
+
 export const sendImageToCloudinary = (
   imageName: string,
   buffer: Buffer

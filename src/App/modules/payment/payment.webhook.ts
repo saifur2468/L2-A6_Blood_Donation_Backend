@@ -16,14 +16,13 @@ export const paymentWebhookHandler = async (req: Request, res: Response) => {
   let event: Stripe.Event;
 
   try {
-    // req.body raw Buffer হতে হবে (express.raw ব্যবহার করার কারণেই এটা সম্ভব)
+   
     event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
   } catch (err: any) {
     console.error('Webhook signature verification failed:', err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  // শুধু আমাদের দরকারি ইভেন্ট handle করব
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session;
 
@@ -31,12 +30,12 @@ export const paymentWebhookHandler = async (req: Request, res: Response) => {
       await handleCheckoutCompleted(session);
     } catch (err) {
       console.error('Error handling checkout.session.completed:', err);
-      // Stripe কে জানিয়ে দিলে ও retry করবে
+     
       return res.status(500).json({ received: false });
     }
   }
 
-  // Stripe কে সবসময় দ্রুত 200 পাঠাতে হবে, নাহলে retry করতে থাকবে
+
   res.status(200).json({ received: true });
 };
 
@@ -48,7 +47,7 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
     return;
   }
 
-  // Idempotency check — একই session এর জন্য দুইবার webhook আসতে পারে
+  
   const existing = await prisma.donationRecord.findUnique({
     where: { id: donationId },
   });
@@ -85,7 +84,7 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
 
   const amount = (session.amount_total ?? 0) / 100;
 
-  // 1. PDF generate
+  e
   const pdfBuffer = await generateReceiptPdfBuffer({
     donationId,
     patientName: donation.request?.patient?.fullName,
@@ -97,13 +96,13 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
     hospitalName: donation.request?.hospitalName,
   });
 
-  // 2. Cloudinary upload
+  
   const receiptUrl = await uploadPdfBufferToCloudinary(
     pdfBuffer,
     `receipt-${donationId}-${Date.now()}`
   );
 
-  // 3. DB update
+ 
   await prisma.donationRecord.update({
     where: { id: donationId },
     data: {
@@ -113,5 +112,5 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
     },
   });
 
-  console.log(`✅ Payment confirmed & receipt generated for donation ${donationId}`);
+  console.log(` Payment confirmed & receipt generated for donation ${donationId}`);
 };

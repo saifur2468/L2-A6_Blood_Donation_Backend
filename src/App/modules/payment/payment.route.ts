@@ -35,10 +35,10 @@ import { PaymentController } from './payment.controller.js';
 
 const router = express.Router();
 
-// 🟢 NEW: Stripe Success Callback Route (Public - authentication ছাড়া)
+
 router.get('/success', PaymentController.handlePaymentSuccess);
 
-// 🟢 NEW: Stripe Webhook Listener Route (MUST use raw body for signature verify)
+
 router.post(
   '/webhook',
   express.raw({ type: 'application/json' }),
