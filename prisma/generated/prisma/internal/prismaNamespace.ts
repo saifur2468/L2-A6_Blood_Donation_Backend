@@ -940,6 +940,7 @@ export type BloodRequestScalarFieldEnum = (typeof BloodRequestScalarFieldEnum)[k
 export const DonationRecordScalarFieldEnum = {
   id: 'id',
   requestId: 'requestId',
+  receiptUrl: 'receiptUrl',
   donorId: 'donorId',
   donatedAt: 'donatedAt',
   paymentStatus: 'paymentStatus'
@@ -966,6 +967,7 @@ export const PaymentScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   amount: 'amount',
+  pdfUrl: 'pdfUrl',
   transactionId: 'transactionId',
   gateway: 'gateway',
   status: 'status',

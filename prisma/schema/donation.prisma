@@ -16,7 +16,7 @@ model DonationRecord {
   id            String        @id @default(uuid())
   requestId     String
   request       BloodRequest  @relation(fields: [requestId], references: [id])
-
+receiptUrl    String?
   donorId       String
   donor         User          @relation("DonorDonations", fields: [donorId], references: [id])
 

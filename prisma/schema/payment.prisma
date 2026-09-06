@@ -3,6 +3,7 @@ model Payment {
   userId        String
   user          User          @relation(fields: [userId], references: [id])
   amount        Float
+  pdfUrl        String
   transactionId String        @unique
   gateway       String
   status        PaymentStatus @default(PENDING)

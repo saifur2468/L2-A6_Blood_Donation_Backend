@@ -27,6 +27,7 @@ export type AggregateDonationRecord = {
 export type DonationRecordMinAggregateOutputType = {
   id: string | null
   requestId: string | null
+  receiptUrl: string | null
   donorId: string | null
   donatedAt: Date | null
   paymentStatus: $Enums.PaymentStatus | null
@@ -35,6 +36,7 @@ export type DonationRecordMinAggregateOutputType = {
 export type DonationRecordMaxAggregateOutputType = {
   id: string | null
   requestId: string | null
+  receiptUrl: string | null
   donorId: string | null
   donatedAt: Date | null
   paymentStatus: $Enums.PaymentStatus | null
@@ -43,6 +45,7 @@ export type DonationRecordMaxAggregateOutputType = {
 export type DonationRecordCountAggregateOutputType = {
   id: number
   requestId: number
+  receiptUrl: number
   donorId: number
   donatedAt: number
   paymentStatus: number
@@ -53,6 +56,7 @@ export type DonationRecordCountAggregateOutputType = {
 export type DonationRecordMinAggregateInputType = {
   id?: true
   requestId?: true
+  receiptUrl?: true
   donorId?: true
   donatedAt?: true
   paymentStatus?: true
@@ -61,6 +65,7 @@ export type DonationRecordMinAggregateInputType = {
 export type DonationRecordMaxAggregateInputType = {
   id?: true
   requestId?: true
+  receiptUrl?: true
   donorId?: true
   donatedAt?: true
   paymentStatus?: true
@@ -69,6 +74,7 @@ export type DonationRecordMaxAggregateInputType = {
 export type DonationRecordCountAggregateInputType = {
   id?: true
   requestId?: true
+  receiptUrl?: true
   donorId?: true
   donatedAt?: true
   paymentStatus?: true
@@ -150,6 +156,7 @@ export type DonationRecordGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 export type DonationRecordGroupByOutputType = {
   id: string
   requestId: string
+  receiptUrl: string | null
   donorId: string
   donatedAt: Date
   paymentStatus: $Enums.PaymentStatus
@@ -179,6 +186,7 @@ export type DonationRecordWhereInput = {
   NOT?: Prisma.DonationRecordWhereInput | Prisma.DonationRecordWhereInput[]
   id?: Prisma.StringFilter<"DonationRecord"> | string
   requestId?: Prisma.StringFilter<"DonationRecord"> | string
+  receiptUrl?: Prisma.StringNullableFilter<"DonationRecord"> | string | null
   donorId?: Prisma.StringFilter<"DonationRecord"> | string
   donatedAt?: Prisma.DateTimeFilter<"DonationRecord"> | Date | string
   paymentStatus?: Prisma.EnumPaymentStatusFilter<"DonationRecord"> | $Enums.PaymentStatus
@@ -189,6 +197,7 @@ export type DonationRecordWhereInput = {
 export type DonationRecordOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
+  receiptUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   donorId?: Prisma.SortOrder
   donatedAt?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
@@ -203,6 +212,7 @@ export type DonationRecordWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.DonationRecordWhereInput[]
   NOT?: Prisma.DonationRecordWhereInput | Prisma.DonationRecordWhereInput[]
   requestId?: Prisma.StringFilter<"DonationRecord"> | string
+  receiptUrl?: Prisma.StringNullableFilter<"DonationRecord"> | string | null
   donorId?: Prisma.StringFilter<"DonationRecord"> | string
   donatedAt?: Prisma.DateTimeFilter<"DonationRecord"> | Date | string
   paymentStatus?: Prisma.EnumPaymentStatusFilter<"DonationRecord"> | $Enums.PaymentStatus
@@ -213,6 +223,7 @@ export type DonationRecordWhereUniqueInput = Prisma.AtLeast<{
 export type DonationRecordOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
+  receiptUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   donorId?: Prisma.SortOrder
   donatedAt?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
@@ -227,6 +238,7 @@ export type DonationRecordScalarWhereWithAggregatesInput = {
   NOT?: Prisma.DonationRecordScalarWhereWithAggregatesInput | Prisma.DonationRecordScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"DonationRecord"> | string
   requestId?: Prisma.StringWithAggregatesFilter<"DonationRecord"> | string
+  receiptUrl?: Prisma.StringNullableWithAggregatesFilter<"DonationRecord"> | string | null
   donorId?: Prisma.StringWithAggregatesFilter<"DonationRecord"> | string
   donatedAt?: Prisma.DateTimeWithAggregatesFilter<"DonationRecord"> | Date | string
   paymentStatus?: Prisma.EnumPaymentStatusWithAggregatesFilter<"DonationRecord"> | $Enums.PaymentStatus
@@ -234,6 +246,7 @@ export type DonationRecordScalarWhereWithAggregatesInput = {
 
 export type DonationRecordCreateInput = {
   id?: string
+  receiptUrl?: string | null
   donatedAt?: Date | string
   paymentStatus?: $Enums.PaymentStatus
   request: Prisma.BloodRequestCreateNestedOneWithoutDonationsInput
@@ -243,6 +256,7 @@ export type DonationRecordCreateInput = {
 export type DonationRecordUncheckedCreateInput = {
   id?: string
   requestId: string
+  receiptUrl?: string | null
   donorId: string
   donatedAt?: Date | string
   paymentStatus?: $Enums.PaymentStatus
@@ -250,6 +264,7 @@ export type DonationRecordUncheckedCreateInput = {
 
 export type DonationRecordUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   request?: Prisma.BloodRequestUpdateOneRequiredWithoutDonationsNestedInput
@@ -259,6 +274,7 @@ export type DonationRecordUpdateInput = {
 export type DonationRecordUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donorId?: Prisma.StringFieldUpdateOperationsInput | string
   donatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -267,6 +283,7 @@ export type DonationRecordUncheckedUpdateInput = {
 export type DonationRecordCreateManyInput = {
   id?: string
   requestId: string
+  receiptUrl?: string | null
   donorId: string
   donatedAt?: Date | string
   paymentStatus?: $Enums.PaymentStatus
@@ -274,6 +291,7 @@ export type DonationRecordCreateManyInput = {
 
 export type DonationRecordUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
 }
@@ -281,6 +299,7 @@ export type DonationRecordUpdateManyMutationInput = {
 export type DonationRecordUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donorId?: Prisma.StringFieldUpdateOperationsInput | string
   donatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -304,6 +323,7 @@ export type DonationRecordRequestIdDonorIdCompoundUniqueInput = {
 export type DonationRecordCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
+  receiptUrl?: Prisma.SortOrder
   donorId?: Prisma.SortOrder
   donatedAt?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
@@ -312,6 +332,7 @@ export type DonationRecordCountOrderByAggregateInput = {
 export type DonationRecordMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
+  receiptUrl?: Prisma.SortOrder
   donorId?: Prisma.SortOrder
   donatedAt?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
@@ -320,6 +341,7 @@ export type DonationRecordMaxOrderByAggregateInput = {
 export type DonationRecordMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
+  receiptUrl?: Prisma.SortOrder
   donorId?: Prisma.SortOrder
   donatedAt?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
@@ -365,6 +387,10 @@ export type DonationRecordUncheckedUpdateManyWithoutRequestNestedInput = {
   update?: Prisma.DonationRecordUpdateWithWhereUniqueWithoutRequestInput | Prisma.DonationRecordUpdateWithWhereUniqueWithoutRequestInput[]
   updateMany?: Prisma.DonationRecordUpdateManyWithWhereWithoutRequestInput | Prisma.DonationRecordUpdateManyWithWhereWithoutRequestInput[]
   deleteMany?: Prisma.DonationRecordScalarWhereInput | Prisma.DonationRecordScalarWhereInput[]
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type EnumPaymentStatusFieldUpdateOperationsInput = {
@@ -415,6 +441,7 @@ export type DonationRecordUncheckedUpdateManyWithoutDonorNestedInput = {
 
 export type DonationRecordCreateWithoutRequestInput = {
   id?: string
+  receiptUrl?: string | null
   donatedAt?: Date | string
   paymentStatus?: $Enums.PaymentStatus
   donor: Prisma.UserCreateNestedOneWithoutDonationsMadeInput
@@ -422,6 +449,7 @@ export type DonationRecordCreateWithoutRequestInput = {
 
 export type DonationRecordUncheckedCreateWithoutRequestInput = {
   id?: string
+  receiptUrl?: string | null
   donorId: string
   donatedAt?: Date | string
   paymentStatus?: $Enums.PaymentStatus
@@ -459,6 +487,7 @@ export type DonationRecordScalarWhereInput = {
   NOT?: Prisma.DonationRecordScalarWhereInput | Prisma.DonationRecordScalarWhereInput[]
   id?: Prisma.StringFilter<"DonationRecord"> | string
   requestId?: Prisma.StringFilter<"DonationRecord"> | string
+  receiptUrl?: Prisma.StringNullableFilter<"DonationRecord"> | string | null
   donorId?: Prisma.StringFilter<"DonationRecord"> | string
   donatedAt?: Prisma.DateTimeFilter<"DonationRecord"> | Date | string
   paymentStatus?: Prisma.EnumPaymentStatusFilter<"DonationRecord"> | $Enums.PaymentStatus
@@ -466,6 +495,7 @@ export type DonationRecordScalarWhereInput = {
 
 export type DonationRecordCreateWithoutDonorInput = {
   id?: string
+  receiptUrl?: string | null
   donatedAt?: Date | string
   paymentStatus?: $Enums.PaymentStatus
   request: Prisma.BloodRequestCreateNestedOneWithoutDonationsInput
@@ -474,6 +504,7 @@ export type DonationRecordCreateWithoutDonorInput = {
 export type DonationRecordUncheckedCreateWithoutDonorInput = {
   id?: string
   requestId: string
+  receiptUrl?: string | null
   donatedAt?: Date | string
   paymentStatus?: $Enums.PaymentStatus
 }
@@ -506,6 +537,7 @@ export type DonationRecordUpdateManyWithWhereWithoutDonorInput = {
 
 export type DonationRecordCreateManyRequestInput = {
   id?: string
+  receiptUrl?: string | null
   donorId: string
   donatedAt?: Date | string
   paymentStatus?: $Enums.PaymentStatus
@@ -513,6 +545,7 @@ export type DonationRecordCreateManyRequestInput = {
 
 export type DonationRecordUpdateWithoutRequestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   donor?: Prisma.UserUpdateOneRequiredWithoutDonationsMadeNestedInput
@@ -520,6 +553,7 @@ export type DonationRecordUpdateWithoutRequestInput = {
 
 export type DonationRecordUncheckedUpdateWithoutRequestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donorId?: Prisma.StringFieldUpdateOperationsInput | string
   donatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -527,6 +561,7 @@ export type DonationRecordUncheckedUpdateWithoutRequestInput = {
 
 export type DonationRecordUncheckedUpdateManyWithoutRequestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donorId?: Prisma.StringFieldUpdateOperationsInput | string
   donatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -535,12 +570,14 @@ export type DonationRecordUncheckedUpdateManyWithoutRequestInput = {
 export type DonationRecordCreateManyDonorInput = {
   id?: string
   requestId: string
+  receiptUrl?: string | null
   donatedAt?: Date | string
   paymentStatus?: $Enums.PaymentStatus
 }
 
 export type DonationRecordUpdateWithoutDonorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   request?: Prisma.BloodRequestUpdateOneRequiredWithoutDonationsNestedInput
@@ -549,6 +586,7 @@ export type DonationRecordUpdateWithoutDonorInput = {
 export type DonationRecordUncheckedUpdateWithoutDonorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
 }
@@ -556,6 +594,7 @@ export type DonationRecordUncheckedUpdateWithoutDonorInput = {
 export type DonationRecordUncheckedUpdateManyWithoutDonorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
 }
@@ -565,6 +604,7 @@ export type DonationRecordUncheckedUpdateManyWithoutDonorInput = {
 export type DonationRecordSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   requestId?: boolean
+  receiptUrl?: boolean
   donorId?: boolean
   donatedAt?: boolean
   paymentStatus?: boolean
@@ -575,6 +615,7 @@ export type DonationRecordSelect<ExtArgs extends runtime.Types.Extensions.Intern
 export type DonationRecordSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   requestId?: boolean
+  receiptUrl?: boolean
   donorId?: boolean
   donatedAt?: boolean
   paymentStatus?: boolean
@@ -585,6 +626,7 @@ export type DonationRecordSelectCreateManyAndReturn<ExtArgs extends runtime.Type
 export type DonationRecordSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   requestId?: boolean
+  receiptUrl?: boolean
   donorId?: boolean
   donatedAt?: boolean
   paymentStatus?: boolean
@@ -595,12 +637,13 @@ export type DonationRecordSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
 export type DonationRecordSelectScalar = {
   id?: boolean
   requestId?: boolean
+  receiptUrl?: boolean
   donorId?: boolean
   donatedAt?: boolean
   paymentStatus?: boolean
 }
 
-export type DonationRecordOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requestId" | "donorId" | "donatedAt" | "paymentStatus", ExtArgs["result"]["donationRecord"]>
+export type DonationRecordOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requestId" | "receiptUrl" | "donorId" | "donatedAt" | "paymentStatus", ExtArgs["result"]["donationRecord"]>
 export type DonationRecordInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   request?: boolean | Prisma.BloodRequestDefaultArgs<ExtArgs>
   donor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -623,6 +666,7 @@ export type $DonationRecordPayload<ExtArgs extends runtime.Types.Extensions.Inte
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     requestId: string
+    receiptUrl: string | null
     donorId: string
     donatedAt: Date
     paymentStatus: $Enums.PaymentStatus
@@ -1053,6 +1097,7 @@ export interface Prisma__DonationRecordClient<T, Null = never, ExtArgs extends r
 export interface DonationRecordFieldRefs {
   readonly id: Prisma.FieldRef<"DonationRecord", 'String'>
   readonly requestId: Prisma.FieldRef<"DonationRecord", 'String'>
+  readonly receiptUrl: Prisma.FieldRef<"DonationRecord", 'String'>
   readonly donorId: Prisma.FieldRef<"DonationRecord", 'String'>
   readonly donatedAt: Prisma.FieldRef<"DonationRecord", 'DateTime'>
   readonly paymentStatus: Prisma.FieldRef<"DonationRecord", 'PaymentStatus'>
