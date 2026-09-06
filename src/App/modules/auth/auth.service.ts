@@ -115,180 +115,179 @@ const connectionString = String(process.env.DATABASE_URL || '');
 
 const pool = new pg.Pool({ connectionString });
 const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
+// const prisma = new PrismaClient({ adapter });
 
-// ---------------- REGISTER ----------------
-const registerUserInDB = async (payload: any) => {
-  const isUserExists = await prisma.user.findUnique({
-    where: { email: payload.email },
-  });
 
-  if (isUserExists) {
-    throw new Error('User with this email already exists!');
-  }
+// const registerUserInDB = async (payload: any) => {
+//   const isUserExists = await prisma.user.findUnique({
+//     where: { email: payload.email },
+//   });
 
-  const hashedPassword = await bcrypt.hash(payload.password, 10);
+//   if (isUserExists) {
+//     throw new Error('User with this email already exists!');
+//   }
 
-  const newUser = await prisma.user.create({
-    data: {
-      fullName: payload.fullName,
-      email: payload.email,
-      password: hashedPassword,
-      phoneNumber: payload.phoneNumber,
-      bloodGroup: payload.bloodGroup,
-      city: payload.city,
-      role: payload.role || 'PATIENT',
-    },
-    select: {
-      id: true,
-      fullName: true,
-      email: true,
-      role: true,
-      bloodGroup: true,
-      city: true,
-      phoneNumber: true,
-      createdAt: true,
-    },
-  });
+//   const hashedPassword = await bcrypt.hash(payload.password, 10);
 
-  return newUser;
-};
+//   const newUser = await prisma.user.create({
+//     data: {
+//       fullName: payload.fullName,
+//       email: payload.email,
+//       password: hashedPassword,
+//       phoneNumber: payload.phoneNumber,
+//       bloodGroup: payload.bloodGroup,
+//       city: payload.city,
+//       role: payload.role || 'PATIENT',
+//     },
+//     select: {
+//       id: true,
+//       fullName: true,
+//       email: true,
+//       role: true,
+//       bloodGroup: true,
+//       city: true,
+//       phoneNumber: true,
+//       createdAt: true,
+//     },
+//   });
 
-// ---------------- JWT HELPER ----------------
-const createToken = (
-  jwtPayload: { id: string; email: string; role: string },
-  secret: string,
-  expiresIn: string
-) => {
-  return jwt.sign(jwtPayload, secret, { expiresIn } as jwt.SignOptions);
-};
+//   return newUser;
+// };
 
-const issueTokensForUser = (user: { id: string; email: string; role: string }) => {
-  const jwtPayload = {
-    id: user.id,
-    email: user.email,
-    role: user.role,
-  };
 
-  const accessToken = createToken(
-    jwtPayload,
-    process.env.JWT_ACCESS_SECRET as string,
-    process.env.JWT_ACCESS_EXPIRES_IN || '1d'
-  );
+// const createToken = (
+//   jwtPayload: { id: string; email: string; role: string },
+//   secret: string,
+//   expiresIn: string
+// ) => {
+//   return jwt.sign(jwtPayload, secret, { expiresIn } as jwt.SignOptions);
+// };
 
-  const refreshToken = createToken(
-    jwtPayload,
-    process.env.JWT_REFRESH_SECRET as string,
-    process.env.JWT_REFRESH_EXPIRES_IN || '30d'
-  );
+// const issueTokensForUser = (user: { id: string; email: string; role: string }) => {
+//   const jwtPayload = {
+//     id: user.id,
+//     email: user.email,
+//     role: user.role,
+//   };
 
-  return { accessToken, refreshToken };
-};
+//   const accessToken = createToken(
+//     jwtPayload,
+//     process.env.JWT_ACCESS_SECRET as string,
+//     process.env.JWT_ACCESS_EXPIRES_IN || '1d'
+//   );
 
-// ---------------- LOGIN ----------------
-const loginUser = async (payload: { email: string; password: string }) => {
-  const user = await prisma.user.findUnique({
-    where: { email: payload.email },
-  });
+//   const refreshToken = createToken(
+//     jwtPayload,
+//     process.env.JWT_REFRESH_SECRET as string,
+//     process.env.JWT_REFRESH_EXPIRES_IN || '30d'
+//   );
 
-  if (!user) {
-    throw new Error('User not found with this email!');
-  }
+//   return { accessToken, refreshToken };
+// };
 
-  // Google দিয়ে signup করা user password ছাড়া normal login করতে পারবে না
-  if (!user.password) {
-    throw new Error('This account uses Google login. Please log in with Google.');
-  }
 
-  const isPasswordMatched = await bcrypt.compare(payload.password, user.password);
+// const loginUser = async (payload: { email: string; password: string }) => {
+//   const user = await prisma.user.findUnique({
+//     where: { email: payload.email },
+//   });
 
-  if (!isPasswordMatched) {
-    throw new Error('Incorrect password!');
-  }
+//   if (!user) {
+//     throw new Error('User not found with this email!');
+//   }
 
-  const { accessToken, refreshToken } = issueTokensForUser({
-    id: user.id,
-    email: user.email,
-    role: user.role,
-  });
+  
+//   if (!user.password) {
+//     throw new Error('This account uses Google login. Please log in with Google.');
+//   }
 
-  return {
-    accessToken,
-    refreshToken,
-    user: {
-      id: user.id,
-      fullName: user.fullName,
-      email: user.email,
-      role: user.role,
-    },
-  };
-};
+//   const isPasswordMatched = await bcrypt.compare(payload.password, user.password);
 
-// ---------------- LOGOUT ----------------
-// simple in-memory blacklist (production এ Redis ব্যবহার করা ভালো)
-const tokenBlacklist = new Set<string>();
+//   if (!isPasswordMatched) {
+//     throw new Error('Incorrect password!');
+//   }
 
-const logoutUser = async (token: string, email: string) => {
-  const user = await prisma.user.findUnique({ where: { email } });
+//   const { accessToken, refreshToken } = issueTokensForUser({
+//     id: user.id,
+//     email: user.email,
+//     role: user.role,
+//   });
 
-  if (!user) {
-    throw new Error('User not found!');
-  }
+//   return {
+//     accessToken,
+//     refreshToken,
+//     user: {
+//       id: user.id,
+//       fullName: user.fullName,
+//       email: user.email,
+//       role: user.role,
+//     },
+//   };
+// };
 
-  tokenBlacklist.add(token);
 
-  return { message: 'Logged out successfully!' };
-};
+// const tokenBlacklist = new Set<string>();
 
-const isTokenBlacklisted = (token: string) => {
-  return tokenBlacklist.has(token);
-};
+// const logoutUser = async (token: string, email: string) => {
+//   const user = await prisma.user.findUnique({ where: { email } });
 
-// ---------------- GOOGLE LOGIN ----------------
-const findOrCreateGoogleUser = async (profile: {
-  id: string;
-  emails?: { value: string }[];
-  displayName?: string;
-}) => {
-  const email = profile.emails?.[0]?.value;
+//   if (!user) {
+//     throw new Error('User not found!');
+//   }
 
-  if (!email) {
-    throw new Error('No email found from Google profile');
-  }
+//   tokenBlacklist.add(token);
 
-  let user = await prisma.user.findFirst({
-    where: {
-      OR: [{ googleId: profile.id }, { email }],
-    },
-  });
+//   return { message: 'Logged out successfully!' };
+// };
 
-  if (user) {
-    if (!user.googleId) {
-      user = await prisma.user.update({
-        where: { id: user.id },
-        data: { googleId: profile.id },
-      });
-    }
-  } else {
-    user = await prisma.user.create({
-      data: {
-        fullName: profile.displayName || 'Google User',
-        email,
-        googleId: profile.id,
-        password: null,
-        role: 'PATIENT',
-      },
-    });
-  }
+// const isTokenBlacklisted = (token: string) => {
+//   return tokenBlacklist.has(token);
+// };
 
-  return user;
-};
 
-export const AuthService = {
-  registerUserInDB,
-  loginUser,
-  logoutUser,
-  isTokenBlacklisted,
-  issueTokensForUser,
-  findOrCreateGoogleUser,
-};
+// const findOrCreateGoogleUser = async (profile: {
+//   id: string;
+//   emails?: { value: string }[];
+//   displayName?: string;
+// }) => {
+//   const email = profile.emails?.[0]?.value;
+
+//   if (!email) {
+//     throw new Error('No email found from Google profile');
+//   }
+
+//   let user = await prisma.user.findFirst({
+//     where: {
+//       OR: [{ googleId: profile.id }, { email }],
+//     },
+//   });
+
+//   if (user) {
+//     if (!user.googleId) {
+//       user = await prisma.user.update({
+//         where: { id: user.id },
+//         data: { googleId: profile.id },
+//       });
+//     }
+//   } else {
+//     user = await prisma.user.create({
+//       data: {
+//         fullName: profile.displayName || 'Google User',
+//         email,
+//         googleId: profile.id,
+//         password: null,
+//         role: 'PATIENT',
+//       },
+//     });
+//   }
+
+//   return user;
+// };
+
+// export const AuthService = {
+//   registerUserInDB,
+//   loginUser,
+//   logoutUser,
+//   isTokenBlacklisted,
+//   issueTokensForUser,
+//   findOrCreateGoogleUser,
+// };

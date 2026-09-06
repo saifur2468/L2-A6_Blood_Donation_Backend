@@ -92,29 +92,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import type { Request, Response } from 'express';
 import { AuthService } from './auth.service.js';
 
@@ -201,7 +178,7 @@ const logoutUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-// ---------------- GOOGLE CALLBACK ----------------
+
 const googleCallback = async (req: Request, res: Response): Promise<void> => {
   try {
     const user = req.user as {

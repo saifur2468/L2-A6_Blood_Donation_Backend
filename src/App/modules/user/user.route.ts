@@ -30,3 +30,25 @@ router.get('/test-error', (req, res, next) => {
   throw new AppError(404, 'User not found testing AppError!');
 });
 export const UserRoutes = router;
+
+
+
+// import express from 'express';
+// import { updateMyProfile,getMyProfile } from './user.controller.js';
+// import auth from '../../middlewares/auth.js'; // Named import/Default import চেক করে নিন
+
+// const router = express.Router();
+
+// // 1. PATCH http://localhost:5000/api/v1/user/me
+// router.patch(
+//   '/me',
+//   auth('PATIENT', 'DONOR', 'ADMIN'),
+//   updateMyProfile
+// );
+// router.get(
+//   '/me',
+//   auth('PATIENT', 'DONOR', 'ADMIN'),
+//   getMyProfile
+// );
+
+// export const UserRoutes = router;

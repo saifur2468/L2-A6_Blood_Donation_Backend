@@ -1,222 +1,172 @@
-// import { PrismaClient, BloodGroup } from '../../../../prisma/generated/prisma/client.js';
-// import { PrismaPg } from '@prisma/adapter-pg';
-// import pg from 'pg';
+import { PrismaClient, BloodGroup } from '../../../../prisma/generated/prisma/client.js';
+import { PrismaPg } from '@prisma/adapter-pg';
+import pg from 'pg';
 
-// const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
-// const adapter = new PrismaPg(pool);
-// const prisma = new PrismaClient({ adapter });
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
-// export interface IUpdateProfilePayload {
-//   fullName?: string;
-//   location?: string;
-//   phone?: string;
-//   availabilityStatus?: boolean;
-//   lastDonationDate?: string;
-//   profilePhoto?: string; 
-// }
+export interface IUpdateProfilePayload {
+  fullName?: string;
+  location?: string;
+  phone?: string;
+  availabilityStatus?: boolean;
+  lastDonationDate?: string;
+  profilePhoto?: string; 
+}
 
-// export interface IDonorQueryFilters {
-//   bloodGroup?: string;
-//   location?: string;
-//   availabilityStatus?: string | boolean;
-// }
+export interface IDonorQueryFilters {
+  bloodGroup?: string;
+  location?: string;
+  availabilityStatus?: string | boolean;
+}
 
-// const bloodGroupMap: Record<string, BloodGroup> = {
-//   'A+': BloodGroup.A_POSITIVE,
-//   'A-': BloodGroup.A_NEGATIVE,
-//   'B+': BloodGroup.B_POSITIVE,
-//   'B-': BloodGroup.B_NEGATIVE,
-//   'AB+': BloodGroup.AB_POSITIVE,
-//   'AB-': BloodGroup.AB_NEGATIVE,
-//   'O+': BloodGroup.O_POSITIVE,
-//   'O-': BloodGroup.O_NEGATIVE,
-// };
-
-// const getMyProfileFromDB = async (userId: string) => {
-//   const user = await prisma.user.findUnique({
-//     where: {
-//       id: userId,
-//     },
-    
-//     select: {
-//       id: true,
-//       fullName: true,
-//       email: true,
-//       role: true,
-//       bloodGroup: true,
-//       city: true,
-//       phoneNumber: true,
-//       isAvailable: true,
-//       profilePhoto: true, 
-//       lastDonatedAt: true,
-//       createdAt: true,
-//       updatedAt: true,
-//     },
-//   });
-
-//   if (!user) {
-//     throw new Error('User not found!');
-//   }
-
-//   return user;
-// };
-
-// const updateMyProfileInDB = async (
-//   userId: string,
-//   payload: IUpdateProfilePayload
-// ) => {
-//   const isUserExist = await prisma.user.findUnique({
-//     where: { id: userId },
-//   });
-
-//   if (!isUserExist) {
-//     throw new Error('User does not exist!');
-//   }
-
-//   const updateData: Record<string, any> = {};
-
-//   if (payload.fullName !== undefined) updateData.fullName = payload.fullName;
-//   if (payload.location !== undefined) updateData.city = payload.location;
-//   if (payload.phone !== undefined) updateData.phoneNumber = payload.phone;
-//   if (payload.availabilityStatus !== undefined) updateData.isAvailable = payload.availabilityStatus;
-//   if (payload.profilePhoto !== undefined) updateData.profilePhoto = payload.profilePhoto; // 👈 ৩. ডাটাবেজে ম্যাপিং যুক্ত করা হলো
-//   if (payload.lastDonationDate !== undefined) {
-//     updateData.lastDonatedAt = new Date(payload.lastDonationDate);
-//   }
-
-//   const result = await prisma.user.update({
-//     where: {
-//       id: userId,
-//     },
-//     data: updateData,
-//     select: {
-//       id: true,
-//       fullName: true,
-//       email: true,
-//       role: true,
-//       bloodGroup: true,
-//       city: true,
-//       phoneNumber: true,
-//       isAvailable: true,
-//       profilePhoto: true, 
-//       lastDonatedAt: true,
-//       createdAt: true,
-//       updatedAt: true,
-//     },
-//   });
-
-//   return result;
-// };
-
-// const getAllDonorsFromDB = async (filters: IDonorQueryFilters) => {
-//   const { bloodGroup, location, availabilityStatus } = filters;
-//   const whereConditions: Record<string, any> = {};
-
-//   if (bloodGroup) {
-//     const normalized = bloodGroupMap[bloodGroup] ?? (bloodGroup as BloodGroup);
-
-//     if (!Object.values(BloodGroup).includes(normalized)) {
-//       throw new Error(
-//         `Invalid blood group "${bloodGroup}". Expected one of: ${Object.keys(bloodGroupMap).join(', ')}`
-//       );
-//     }
-
-//     whereConditions.bloodGroup = normalized;
-//   }
-
-//   if (location) {
-//     whereConditions.city = {
-//       contains: location,
-//       mode: 'insensitive',
-//     };
-//   }
-
-//   if (availabilityStatus !== undefined) {
-//     whereConditions.isAvailable = availabilityStatus === 'true' || availabilityStatus === true;
-//   }
-
-//   const result = await prisma.user.findMany({
-//     where: whereConditions,
-//     select: {
-//       id: true,
-//       fullName: true,
-//       email: true,
-//       role: true,
-//       bloodGroup: true,
-//       city: true,
-//       phoneNumber: true,
-//       isAvailable: true,
-//       profilePhoto: true,
-//       lastDonatedAt: true,
-//       createdAt: true,
-//       updatedAt: true,
-//     },
-//   });
-
-//   return result;
-// };
-
-// export const UserService = {
-//   getMyProfileFromDB,
-//   updateMyProfileInDB,
-//   getAllDonorsFromDB,
-// };
-
-
-
-
-
-
-
-
-
-import { NextFunction, Request, Response } from 'express';
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import AppError from '../../errors/AppError.js';
-
-const auth = (...requiredRoles: string[]) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const token = req.headers.authorization;
-
-      // 1. Check if token exists
-      if (!token) {
-        throw new AppError(401, 'You are not authorized! Token is missing.');
-      }
-
-      // 2. Format Token
-      const tokenString = token.startsWith('Bearer ')
-        ? token.split(' ')[1]
-        : token;
-
-      // 3. Verify Token
-      let decoded: JwtPayload;
-      try {
-        decoded = jwt.verify(
-          tokenString,
-          process.env.JWT_ACCESS_SECRET || 'secret'
-        ) as JwtPayload;
-      } catch (error) {
-        throw new AppError(401, 'Unauthorized! Invalid or expired token.');
-      }
-
-      const { role } = decoded;
-
-      // 4. Role Authorization Check
-      if (requiredRoles.length && !requiredRoles.includes(role)) {
-        throw new AppError(
-          403,
-          'Forbidden! You are not authorized to perform this action.'
-        );
-      }
-
-      // 5. Attach user to request
-      req.user = decoded;
-      next();
-    } catch (err) {
-      next(err);
-    }
-  };
+const bloodGroupMap: Record<string, BloodGroup> = {
+  'A+': BloodGroup.A_POSITIVE,
+  'A-': BloodGroup.A_NEGATIVE,
+  'B+': BloodGroup.B_POSITIVE,
+  'B-': BloodGroup.B_NEGATIVE,
+  'AB+': BloodGroup.AB_POSITIVE,
+  'AB-': BloodGroup.AB_NEGATIVE,
+  'O+': BloodGroup.O_POSITIVE,
+  'O-': BloodGroup.O_NEGATIVE,
 };
 
-export default auth;
+const getMyProfileFromDB = async (userId: string) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    
+    select: {
+      id: true,
+      fullName: true,
+      email: true,
+      role: true,
+      bloodGroup: true,
+      city: true,
+      phoneNumber: true,
+      isAvailable: true,
+      profilePhoto: true, 
+      lastDonatedAt: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  if (!user) {
+    throw new Error('User not found!');
+  }
+
+  return user;
+};
+
+const updateMyProfileInDB = async (
+  userId: string,
+  payload: IUpdateProfilePayload
+) => {
+  const isUserExist = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!isUserExist) {
+    throw new Error('User does not exist!');
+  }
+
+  const updateData: Record<string, any> = {};
+
+  if (payload.fullName !== undefined) updateData.fullName = payload.fullName;
+  if (payload.location !== undefined) updateData.city = payload.location;
+  if (payload.phone !== undefined) updateData.phoneNumber = payload.phone;
+  if (payload.availabilityStatus !== undefined) updateData.isAvailable = payload.availabilityStatus;
+  if (payload.profilePhoto !== undefined) updateData.profilePhoto = payload.profilePhoto; // 👈 ৩. ডাটাবেজে ম্যাপিং যুক্ত করা হলো
+  if (payload.lastDonationDate !== undefined) {
+    updateData.lastDonatedAt = new Date(payload.lastDonationDate);
+  }
+
+  const result = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: updateData,
+    select: {
+      id: true,
+      fullName: true,
+      email: true,
+      role: true,
+      bloodGroup: true,
+      city: true,
+      phoneNumber: true,
+      isAvailable: true,
+      profilePhoto: true, 
+      lastDonatedAt: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return result;
+};
+
+const getAllDonorsFromDB = async (filters: IDonorQueryFilters) => {
+  const { bloodGroup, location, availabilityStatus } = filters;
+  const whereConditions: Record<string, any> = {};
+
+  if (bloodGroup) {
+    const normalized = bloodGroupMap[bloodGroup] ?? (bloodGroup as BloodGroup);
+
+    if (!Object.values(BloodGroup).includes(normalized)) {
+      throw new Error(
+        `Invalid blood group "${bloodGroup}". Expected one of: ${Object.keys(bloodGroupMap).join(', ')}`
+      );
+    }
+
+    whereConditions.bloodGroup = normalized;
+  }
+
+  if (location) {
+    whereConditions.city = {
+      contains: location,
+      mode: 'insensitive',
+    };
+  }
+
+  if (availabilityStatus !== undefined) {
+    whereConditions.isAvailable = availabilityStatus === 'true' || availabilityStatus === true;
+  }
+
+  const result = await prisma.user.findMany({
+    where: whereConditions,
+    select: {
+      id: true,
+      fullName: true,
+      email: true,
+      role: true,
+      bloodGroup: true,
+      city: true,
+      phoneNumber: true,
+      isAvailable: true,
+      profilePhoto: true,
+      lastDonatedAt: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return result;
+};
+
+export const UserService = {
+  getMyProfileFromDB,
+  updateMyProfileInDB,
+  getAllDonorsFromDB,
+};
+
+
+
+
+
+
+
+
+

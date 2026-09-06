@@ -27,38 +27,22 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// auth.route.ts
 import express from 'express';
 import passport from '../../builder/config/passport.js';
 import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
-// 1. Google Auth Route (কোথা থেকে রোল আসছে তা ক্যাচ করে State এ পাস করা)
+
 router.get('/google', (req, res, next) => {
-  const role = (req.query.role as string) || 'PATIENT'; // ডিফল্ট PATIENT, তবে কাস্টম রোল দেওয়া যাবে
+  const role = (req.query.role as string) || 'PATIENT'; 
   passport.authenticate('google', {
     scope: ['profile', 'email'],
-    state: JSON.stringify({ role }), // state-এর ভেতরে রোল পাঠানো হচ্ছে
+    state: JSON.stringify({ role }), 
   })(req, res, next);
 });
 
-// 2. Callback Route (State থেকে রোল রিড করে ডাটাবেজ ক্রিয়েট করা)
+
 router.get(
   '/google/callback',
   passport.authenticate('google', { session: false, failureRedirect: '/api/v1/auth/oauth-failed' }),
