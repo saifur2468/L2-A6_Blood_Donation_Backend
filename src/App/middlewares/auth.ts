@@ -57,17 +57,17 @@ const auth = (...requiredRoles: string[]) => {
     try {
       const token = req.headers.authorization;
 
-  
+      // ১. টোকেন পাঠানো হয়েছে কি না চেক করা
       if (!token) {
         throw new AppError(401, 'You are not authorized! Token is missing.');
       }
 
- 
+      // ২. 'Bearer <token>' ফরম্যাট ক্লিন করা
       const tokenString = token.startsWith('Bearer ')
         ? token.split(' ')[1]
         : token;
 
-   
+      // ৩. টোকেন ভ্যালিডেট করা
       let decoded: JwtPayload;
       try {
         decoded = jwt.verify(
@@ -80,7 +80,7 @@ const auth = (...requiredRoles: string[]) => {
 
       const { role } = decoded;
 
-     
+      // ৪. রোল বেসড অ্যাকসেস পারমিশন চেক করা (RBAC)
       if (requiredRoles.length && !requiredRoles.includes(role)) {
         throw new AppError(
           403,
@@ -88,7 +88,7 @@ const auth = (...requiredRoles: string[]) => {
         );
       }
 
-    
+      // ৫. Request অবজেক্টে ইউজারের ডাটা অ্যাটাচ করা
       req.user = decoded;
       next();
     } catch (err) {
