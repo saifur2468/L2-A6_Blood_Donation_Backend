@@ -140,12 +140,20 @@ const createCheckoutSessionInStripe = async (
     include: { request: true },
   });
 
+  // if (!donation) {
+  //   throw new Error('Donation record not found!');
+  // }
+
+  // if (donation.request.patientId !== patientId) {
+  //   throw new Error('You are not authorized to pay for this request!');
+  // }
+
   if (!donation) {
-    throw new Error('Donation record not found!');
+    throw new AppError(404, 'Donation record not found!');
   }
 
   if (donation.request.patientId !== patientId) {
-    throw new Error('You are not authorized to pay for this request!');
+    throw new AppError(403, 'You are not authorized to pay for this request!');
   }
 
   const session = await stripe.checkout.sessions.create({
@@ -237,7 +245,7 @@ const handleStripeWebhookEvent = async (rawBody: any, signature: string) => {
   }
 };
 
-// 3. Get Single Payment Status (Polling endpoint)
+
 const getPaymentStatusFromDB = async (donationId: string) => {
   const donation = await prisma.donationRecord.findUnique({
     where: { id: donationId },
@@ -248,8 +256,11 @@ const getPaymentStatusFromDB = async (donationId: string) => {
     },
   });
 
+  // if (!donation) {
+  //   throw new Error('Donation record not found!');
+  // }
   if (!donation) {
-    throw new Error('Donation record not found!');
+    throw new AppError(404, 'Donation record not found!');
   }
 
   return donation;

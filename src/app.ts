@@ -41,6 +41,18 @@ app.get('/', (req, res) => {
   });
 });
 
+app.use((req, res, next) => {
+  res.status(404).json({
+    success: false,
+    message: 'API Route Not Found!',
+    errorSources: [
+      {
+        path: req.originalUrl,
+        message: 'API endpoint does not exist',
+      },
+    ],
+  });
+});
 
 app.use(globalErrorHandler);
 

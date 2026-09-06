@@ -4,6 +4,7 @@ import  auth  from '../../middlewares/auth.js';
 import validateRequest from '../../middlewares/validateRequest.js';
 import { UserValidation } from './user.validation.js';
 import { upload}  from '../../../App/builder/config/cloudinary.config.js';
+import AppError from '../../errors/AppError.js';
 const router = express.Router();
 
 
@@ -24,4 +25,8 @@ router.patch(
   UserController.updateProfile
 );
 
+
+router.get('/test-error', (req, res, next) => {
+  throw new AppError(404, 'User not found testing AppError!');
+});
 export const UserRoutes = router;

@@ -57,16 +57,23 @@ const loginUserInDB = async (payload: any) => {
     where: { email: payload.email },
   });
 
-  if (!user) {
-    throw new Error('User not found!');
-  }
+  // if (!user) {
+  //   throw new Error('User not found!');
+  // }
 
-  const isPasswordMatched = await bcrypt.compare(payload.password, user.password);
+  // const isPasswordMatched = await bcrypt.compare(payload.password, user.password);
 
-  if (!isPasswordMatched) {
-    throw new Error('Password incorrect!');
-  }
+  // if (!isPasswordMatched) {
+  //   throw new Error('Password incorrect!');
+  // }
+// auth.service.ts
+if (!User) {
+  throw new AppError(404, 'User does not exist!');
+}
 
+if (!(await PasswordMatched(password, User.password))) {
+  throw new AppError(401, 'Password does not match!');
+}
  
   const accessToken = jwt.sign(
     { id: user.id, email: user.email, role: user.role },
