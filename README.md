@@ -4,7 +4,7 @@ A robust RESTful API backend built for managing blood donation requests, donor r
 
 ---
 
-## 🌟 Key Features
+##  Key Features
 
 * **JWT Authentication & Authorization:** Secure user authentication with role-based access control (Admin, Patient, Donor).
 * **Stripe Payment Integration:** Automated support payment checkout flow using Stripe Webhooks.
@@ -15,7 +15,7 @@ A robust RESTful API backend built for managing blood donation requests, donor r
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 * **Runtime:** Node.js
 * **Framework:** Express.js (TypeScript)
@@ -27,7 +27,7 @@ A robust RESTful API backend built for managing blood donation requests, donor r
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### 1. Prerequisites
 Ensure you have the following installed on your machine:
