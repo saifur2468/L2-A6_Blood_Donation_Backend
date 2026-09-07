@@ -3,7 +3,7 @@ import PDFDocument from 'pdfkit';
 import prisma from '../../../lib/prisma.js';
 import cloudinary from '../../builder/config/cloudinary.config.js';
 import AppError from '../../errors/AppError.js';
-
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5000';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2023-10-16',
 });
@@ -148,8 +148,10 @@ const createCheckoutSessionInStripe = async (
       donationId,
       patientId,
     },
-    success_url: `http://localhost:5000/api/v1/payment/success?donation_id=${donationId}`,
-    cancel_url: `http://localhost:5000/api/v1/payment/cancel`,
+    // success_url: `http://localhost:5000/api/v1/payment/success?donation_id=${donationId}`,
+    // cancel_url: `http://localhost:5000/api/v1/payment/cancel`,
+    success_url: `${BACKEND_URL}/api/v1/payment/success?donation_id=${donationId}`,
+  cancel_url: `${BACKEND_URL}/api/v1/payment/cancel`,
   });
 
   return {
