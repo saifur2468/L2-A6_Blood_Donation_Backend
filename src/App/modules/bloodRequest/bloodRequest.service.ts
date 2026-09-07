@@ -113,7 +113,7 @@ const getAllPendingRequestsFromDB = async () => {
       },
     },
     orderBy: {
-      donatedAt: 'desc',
+      createdAt: 'desc',
     },
   });
   return result;

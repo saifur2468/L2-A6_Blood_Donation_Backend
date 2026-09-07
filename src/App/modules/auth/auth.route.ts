@@ -1,57 +1,43 @@
-// import express from 'express';
-// import validateRequest from '../../middlewares/validateRequest.js';
-// import { AuthValidation } from './auth.validation.js'; 
-// import { AuthController } from './auth.controller.js';
-// // import passport from '../../../App/builder/config/passport.js';
-// // import jwt from 'jsonwebtoken';
-// const router = express.Router();
-
-// router.post(
-//   '/register',
-//   validateRequest(AuthValidation.registerValidationSchema), 
-//   AuthController.registerUser
-// );
-
-// router.post(
-//   '/login',
-//   validateRequest(AuthValidation.loginValidationSchema), 
-//   AuthController.loginUser
-// );
-
-
-
-
-
-
-// export const AuthRoutes = router;
-
-
-
 import express from 'express';
-import passport from '../../builder/config/passport.js';
+import validateRequest from '../../middlewares/validateRequest.js';
+import { AuthValidation } from './auth.validation.js'; 
+import { AuthController } from './auth.controller.js';
+import passport from '../../../App/builder/config/passport.js';
 import jwt from 'jsonwebtoken';
-
 const router = express.Router();
 
+router.post(
+  '/register',
+  validateRequest(AuthValidation.registerValidationSchema), 
+  AuthController.registerUser
+);
+
+router.post(
+  '/login',
+  validateRequest(AuthValidation.loginValidationSchema), 
+  AuthController.loginUser
+);
 
 router.get('/google', (req, res, next) => {
-  const role = (req.query.role as string) || 'PATIENT'; 
+  const role = (req.query.role as string) || 'PATIENT';
   passport.authenticate('google', {
     scope: ['profile', 'email'],
-    state: JSON.stringify({ role }), 
+    state: JSON.stringify({ role }),
   })(req, res, next);
 });
 
-
 router.get(
   '/google/callback',
-  passport.authenticate('google', { session: false, failureRedirect: '/api/v1/auth/oauth-failed' }),
+  passport.authenticate('google', {
+    session: false,
+    failureRedirect: '/api/v1/auth/oauth-failed',
+  }),
   (req, res) => {
     const user = req.user as any;
 
     const accessToken = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
-      process.env.JWT_ACCESS_SECRET || 'secret',
+    process.env.JWT_ACCESS_SECRET,
       { expiresIn: '1d' }
     );
 
@@ -67,4 +53,20 @@ router.get(
     });
   }
 );
-export const AuthRoutes = router;
+
+
+
+export const AuthRoutes =router;
+
+
+
+
+
+
+
+
+
+
+
+
+
