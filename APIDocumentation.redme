@@ -57,7 +57,34 @@ http://localhost:5000/api/v1/auth/logout
     "message": "User karim@gmail.com logged out successfully!"
 }
 
+google login 
 
+http://localhost:5000/api/v1/auth/google?role=DONOR
+{
+"success": true,
+"message": "Google Login Successful as DONOR!",
+"data": {
+"accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdiOTU3YWM2LTYxYWQtNDk4YS1hNDI5LTU1ZWI3Mzg1NGUwZSIsImVtYWlsIjoic2FpZmRldndlYkBnbWFpbC5jb20iLCJyb2xlIjoiRE9OT1IiLCJpYXQiOjE3ODg4ODc0NzIsImV4cCI6MTc4ODk3Mzg3Mn0.8Ai-LTySWHV1jaTPs2vfbdcrlnFwbQZPV7BiymSuOjU",
+"user": {
+"id": "7b957ac6-61ad-498a-a429-55eb73854e0e",
+"email": "saifdevweb@gmail.com",
+"googleId": "115223868992944440533",
+"fullName": "Saifur",
+"phoneNumber": "+8801404260731",
+"role": "DONOR",
+"bloodGroup": "O_POSITIVE",
+"city": "Dhaka",
+"location": "Mirpur 10",
+"isAvailable": true,
+"lastDonatedAt": null,
+"profilePhoto": null,
+"isBlocked": true,
+"isDeleted": false,
+"createdAt": "2026-09-06T05:40:42.241Z",
+"updatedAt": "2026-09-07T02:29:48.938Z"
+}
+}
+}
 Zod validation 
 
 {

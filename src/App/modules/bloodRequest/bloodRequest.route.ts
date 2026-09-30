@@ -41,7 +41,7 @@ router.delete(
 
 router.get(
   '/pending-requests',
-  auth('DONOR'),
+  // auth('DONOR'),
   BloodRequestController.getAllPendingRequests
 );
 
