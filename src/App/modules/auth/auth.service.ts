@@ -171,7 +171,8 @@ const registerUserInDB = async (payload: any) => {
       phoneNumber: payload.phoneNumber,
       bloodGroup: payload.bloodGroup,
       city: payload.city,
-      role: payload.role || 'PATIENT',
+      // role: payload.role || 'PATIENT',
+      role:  'PATIENT',
     },
     select: {
       id: true,

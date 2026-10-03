@@ -18,13 +18,21 @@ router.post(
   AuthController.loginUser
 );
 
+// router.get('/google', (req, res, next) => {
+//   const role = (req.query.role as string) || 'PATIENT';
+//   passport.authenticate('google', {
+//     scope: ['profile', 'email'],
+//     state: JSON.stringify({ role }),
+//   })(req, res, next);
 router.get('/google', (req, res, next) => {
-  const role = (req.query.role as string) || 'PATIENT';
+
+  const role = 'PATIENT'; 
   passport.authenticate('google', {
     scope: ['profile', 'email'],
     state: JSON.stringify({ role }),
   })(req, res, next);
 });
+
 
 router.get(
   '/google/callback',
