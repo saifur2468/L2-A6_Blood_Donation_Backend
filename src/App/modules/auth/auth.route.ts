@@ -1,9 +1,89 @@
+// import express from 'express';
+// import validateRequest from '../../middlewares/validateRequest.js';
+// import { AuthValidation } from './auth.validation.js'; 
+// import { AuthController } from './auth.controller.js';
+// import passport from '../../../App/builder/config/passport.js';
+// import jwt from 'jsonwebtoken';
+// const router = express.Router();
+
+// router.post(
+//   '/register',
+//   validateRequest(AuthValidation.registerValidationSchema), 
+//   AuthController.registerUser
+// );
+
+// router.post(
+//   '/login',
+//   validateRequest(AuthValidation.loginValidationSchema), 
+//   AuthController.loginUser
+// );
+
+// // router.get('/google', (req, res, next) => {
+// //   const role = (req.query.role as string) || 'PATIENT';
+// //   passport.authenticate('google', {
+// //     scope: ['profile', 'email'],
+// //     state: JSON.stringify({ role }),
+// //   })(req, res, next);
+// router.get('/google', (req, res, next) => {
+
+//   const role = 'PATIENT'; 
+//   passport.authenticate('google', {
+//     scope: ['profile', 'email'],
+//     state: JSON.stringify({ role }),
+//   })(req, res, next);
+// });
+
+
+// router.get(
+//   '/google/callback',
+//   passport.authenticate('google', {
+//     session: false,
+//     failureRedirect: '/api/v1/auth/oauth-failed',
+//   }),
+//   (req, res) => {
+//     const user = req.user as any;
+
+//     const accessToken = jwt.sign(
+//       { id: user.id, email: user.email, role: user.role },
+//     process.env.JWT_ACCESS_SECRET,
+//       { expiresIn: '1d' }
+//     );
+
+//     const { password, ...userData } = user;
+
+//     res.status(200).json({
+//       success: true,
+//       message: `Google Login Successful as ${user.role}!`,
+//       data: {
+//         accessToken,
+//         user: userData,
+//       },
+//     });
+//   }
+// );
+
+
+
+// export const AuthRoutes =router;
+
+
+
+
+
+
+
+
+
+
+
+
+
 import express from 'express';
 import validateRequest from '../../middlewares/validateRequest.js';
 import { AuthValidation } from './auth.validation.js'; 
 import { AuthController } from './auth.controller.js';
 import passport from '../../../App/builder/config/passport.js';
-import jwt from 'jsonwebtoken';
+
 const router = express.Router();
 
 router.post(
@@ -18,14 +98,7 @@ router.post(
   AuthController.loginUser
 );
 
-// router.get('/google', (req, res, next) => {
-//   const role = (req.query.role as string) || 'PATIENT';
-//   passport.authenticate('google', {
-//     scope: ['profile', 'email'],
-//     state: JSON.stringify({ role }),
-//   })(req, res, next);
 router.get('/google', (req, res, next) => {
-
   const role = 'PATIENT'; 
   passport.authenticate('google', {
     scope: ['profile', 'email'],
@@ -33,48 +106,14 @@ router.get('/google', (req, res, next) => {
   })(req, res, next);
 });
 
-
+// এখানে সরাসরি AuthController.googleCallback ব্যবহার করা হলো যাতে রিডাইরেক্ট কাজ করে
 router.get(
   '/google/callback',
   passport.authenticate('google', {
     session: false,
     failureRedirect: '/api/v1/auth/oauth-failed',
   }),
-  (req, res) => {
-    const user = req.user as any;
-
-    const accessToken = jwt.sign(
-      { id: user.id, email: user.email, role: user.role },
-    process.env.JWT_ACCESS_SECRET,
-      { expiresIn: '1d' }
-    );
-
-    const { password, ...userData } = user;
-
-    res.status(200).json({
-      success: true,
-      message: `Google Login Successful as ${user.role}!`,
-      data: {
-        accessToken,
-        user: userData,
-      },
-    });
-  }
+  AuthController.googleCallback
 );
 
-
-
-export const AuthRoutes =router;
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const AuthRoutes = router;
