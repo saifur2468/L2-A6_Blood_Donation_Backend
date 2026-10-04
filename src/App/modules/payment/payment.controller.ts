@@ -48,21 +48,30 @@ const getMyPaymentHistory = catchAsync(async (req: Request, res: Response) => {
 });
 
 
+// const handlePaymentSuccess = catchAsync(async (req: Request, res: Response) => {
+//   const donationId = req.query.donation_id as string;
+
+//   sendResponse(res, {
+//     statusCode: 200,
+//     success: true,
+//     message: 'Payment & Donation successful!',
+//     data: {
+//       donationId: donationId || null,
+//       status: 'PAID',
+//       receiptStatus: 'PDF generation and Cloudinary upload in progress',
+//     },
+//   });
+// });
+
 const handlePaymentSuccess = catchAsync(async (req: Request, res: Response) => {
   const donationId = req.query.donation_id as string;
 
-  sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: 'Payment & Donation successful!',
-    data: {
-      donationId: donationId || null,
-      status: 'PAID',
-      receiptStatus: 'PDF generation and Cloudinary upload in progress',
-    },
-  });
-});
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
 
+  return res.redirect(
+    `${frontendUrl}/payment/success?donation_id=${donationId ?? ''}`
+  );
+});
 
 const handleStripeWebhook = async (req: Request, res: Response) => {
   const sig = req.headers['stripe-signature'] as string;
