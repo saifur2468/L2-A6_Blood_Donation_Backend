@@ -69,7 +69,8 @@ const handlePaymentSuccess = catchAsync(async (req: Request, res: Response) => {
   const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
 
   return res.redirect(
-    `${frontendUrl}/payment/success?donation_id=${donationId ?? ''}`
+    // `${frontendUrl}/payment/success?donation_id=${donationId ?? ''}`
+    `${frontendUrl}/dashboard/patient/payment/success?donation_id=${donationId ?? ''}`
   );
 });
 
