@@ -285,11 +285,11 @@ const googleCallback = async (req: Request, res: Response): Promise<void> => {
       httpOnly: true,
     });
 
-    const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
-    res.redirect(`${clientUrl}/oauth-success?token=${accessToken}`);
+    const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
+    res.redirect(`${FRONTEND_URL}/oauth-success?token=${accessToken}`);
   } catch (error) {
-    const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
-    res.redirect(`${clientUrl}/oauth-failed`);
+    const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
+    res.redirect(`${FRONTEND_URL}/oauth-failed`);
   }
 };
 
