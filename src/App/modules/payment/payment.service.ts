@@ -288,7 +288,7 @@ import PDFDocument from 'pdfkit';
 import prisma from '../../../lib/prisma.js';
 import cloudinary from '../../builder/config/cloudinary.config.js';
 import AppError from '../../errors/AppError.js';
-import { sendEmail } from '../../../utils/sendEmail.js'; // Nodemailer ইউটিলিটি ইম্পোর্ট করা হলো
+import { sendEmail } from '../../utils/sendEmail.js'; // Nodemailer ইউটিলিটি ইম্পোর্ট করা হলো
 
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5000';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
