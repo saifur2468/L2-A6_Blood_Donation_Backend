@@ -159,12 +159,12 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const result = await AuthService.registerUserInDB(req.body);
 
-    // রেজিস্ট্রেশন সফল হলে ইমেইল পাঠানো
+    // Email pathano: await dite hobe, but fail hole registration fail hobe na
     try {
       const userEmail = result.email || req.body.email;
-      const userName = result.fullName || req.body.fullName || "User";
+      const userName = result.fullName || req.body.fullName || 'User';
 
-      const subject = "Registration Successful - Blood Donation App";
+      const subject = 'Registration Successful - Blood Donation App';
       const html = `
         <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
           <h2 style="color: #dc2626;">Congratulation, ${userName}! 🎉</h2>
@@ -176,12 +176,10 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
         </div>
       `;
 
-      // ব্যাকগ্রাউন্ডে ইমেইল পাঠানো হচ্ছে যাতে রেসপন্স স্লো না হয়
-      sendEmail(userEmail, subject, html).catch((err) => {
-        console.error("Failed to send registration email:", err);
-      });
+      await sendEmail(userEmail, subject, html); // <-- await add korun
+      console.log('Registration email sent to:', userEmail);
     } catch (emailError) {
-      console.error("Email sending error:", emailError);
+      console.error('Registration email FAILED:', emailError);
     }
 
     res.status(201).json({
