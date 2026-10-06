@@ -131,7 +131,7 @@ const loginUser = async (payload: { email: string; password: string }) => {
 // 3. UPDATE PROFILE (FIXED UPDATE ISSUE)
 // ==========================================
 const updateMyProfileInDB = async (userId: string, payload: any) => {
-  // ১. ইউজার ডাটাবেজে আছে কিনা চেক
+ 
   const isUserExists = await prisma.user.findUnique({
     where: { id: userId },
   });
@@ -140,7 +140,7 @@ const updateMyProfileInDB = async (userId: string, payload: any) => {
     throw new Error('User not found!');
   }
 
-  // ২. Blood Group Format Convert করা (যেমন: "AB+" -> "AB_POSITIVE")
+  
   if (payload.bloodGroup) {
     const bloodGroupMap: Record<string, string> = {
       'A+': 'A_POSITIVE',
@@ -158,10 +158,10 @@ const updateMyProfileInDB = async (userId: string, payload: any) => {
     }
   }
 
-  // ৩. Prisma DB Update Execute (Schema অনুযায়ী সব ফিল্ড সিলেক্ট করা হয়েছে)
+ 
   const updatedUser = await prisma.user.update({
     where: { id: userId },
-    data: payload, // payload-এ phoneNumber, bloodGroup, city, location, isAvailable সব আপডেট হবে
+    data: payload, 
     select: {
       id: true,
       fullName: true,
@@ -169,9 +169,9 @@ const updateMyProfileInDB = async (userId: string, payload: any) => {
       role: true,
       bloodGroup: true,
       city: true,
-      location: true,          // <--- missing field added
-      phoneNumber: true,       // <--- missing field added
-      isAvailable: true,       // <--- missing field added
+      location: true,          
+      phoneNumber: true,       
+      isAvailable: true,       
       profilePhoto: true,
       lastDonatedAt: true,
       createdAt: true,
@@ -230,32 +230,35 @@ const forgotPasswordInDB = async (email: string) => {
   return { email: user.email, fullName: user.fullName, rawToken };
 };
 
-const resetPasswordInDB = async (token: string, newPassword: string) => {
+const resetPasswordInDB = async (payload: { email: string; token: string; newPassword: string }) => {
+  const { email, token, newPassword } = payload;
+
   const user = await prisma.user.findFirst({
     where: {
-      passwordResetToken: hashToken(token),
-      passwordResetExpires: { gt: new Date() },
+      email, 
+      passwordResetToken: hashToken(token), 
+      passwordResetExpires: { gt: new Date() }, 
     },
   });
 
-  if (!user) {
-    throw new Error('Reset link is invalid or has expired!');
+  if (!user || user.isDeleted || user.isBlocked) {
+    throw new Error("Invalid or expired reset token!");
   }
 
-  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  const hashedPassword = await bcrypt.hash(newPassword, 12);
 
   await prisma.user.update({
     where: { id: user.id },
     data: {
       password: hashedPassword,
-      passwordResetToken: null,   // token ek bar-ei use hobe
+      passwordResetToken: null,
       passwordResetExpires: null,
     },
   });
 
-  return { message: 'Password reset successfully!' };
+  return { message: "Password reset successfully" };
 };
-
 
 
 
