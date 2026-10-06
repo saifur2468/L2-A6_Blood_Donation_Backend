@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto'; 
 
 
-const resetToken = crypto.randomBytes ? crypto.randomBytes(32).toString('hex') : Math.random().toString(36).substring(2) + Date.now().toString(36);
+// const resetToken = crypto.randomBytes ? crypto.randomBytes(32).toString('hex') : Math.random().toString(36).substring(2) + Date.now().toString(36);
 dotenv.config();
 
 const connectionString = String(process.env.DATABASE_URL || '');

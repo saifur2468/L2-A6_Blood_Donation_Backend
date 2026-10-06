@@ -221,10 +221,14 @@ const forgotPassword = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+
 const resetPassword = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { token, newPassword } = req.body;
-    const result = await AuthService.resetPasswordInDB(token, newPassword);
+    
+    const { email, token, newPassword } = req.body;
+
+
+    const result = await AuthService.resetPasswordInDB({ email, token, newPassword });
 
     res.status(200).json({
       success: true,
@@ -238,7 +242,6 @@ const resetPassword = async (req: Request, res: Response): Promise<void> => {
     });
   }
 };
-
 
 
 export const AuthController = {
