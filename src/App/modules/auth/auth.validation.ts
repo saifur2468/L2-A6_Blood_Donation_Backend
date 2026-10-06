@@ -16,6 +16,18 @@ const registerValidationSchema = z.object({
   }),
 });
 
+const forgotPasswordValidationSchema = z.object({
+  body: z.object({
+    email: z.string().email('Valid email is required'),
+  }),
+});
+
+const resetPasswordValidationSchema = z.object({
+  body: z.object({
+    token: z.string().min(1, 'Token is required'),
+    newPassword: z.string().min(6, 'Password must be at least 6 characters'),
+  }),
+});
 const loginValidationSchema = z.object({
   body: z.object({
     email: z.string({ required_error: 'Email is required' }).email('Invalid email address'),
@@ -26,4 +38,6 @@ const loginValidationSchema = z.object({
 export const AuthValidation = {
   registerValidationSchema,
   loginValidationSchema,
+  forgotPasswordValidationSchema,
+resetPasswordValidationSchema,
 };

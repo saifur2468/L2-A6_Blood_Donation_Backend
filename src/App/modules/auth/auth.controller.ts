@@ -172,9 +172,80 @@ const googleCallback = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+
+
+
+
+
+const forgotPassword = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email } = req.body;
+    const result = await AuthService.forgotPasswordInDB(email);
+
+    if (result) {
+      try {
+        const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
+        const resetLink = `${FRONTEND_URL}/reset-password?token=${result.rawToken}`;
+
+        const html = `
+          <div style="font-family:Arial,sans-serif;max-width:480px;margin:auto;padding:24px;border:1px solid #eee;border-radius:12px">
+            <h2 style="color:#111">Reset your password</h2>
+            <p>Hi ${result.fullName},</p>
+            <p>We received a request to reset your password. Click the button below. This link expires in 15 minutes.</p>
+            <p style="text-align:center;margin:28px 0">
+              <a href="${resetLink}" style="background:#dc2626;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold">
+                Reset Password
+              </a>
+            </p>
+            <p style="color:#666;font-size:13px">If you didn't request this, you can safely ignore this email.</p>
+          </div>
+        `;
+
+        await sendEmail(result.email, 'Reset your password - Blood Donation App', html);
+      } catch (emailError) {
+        console.error('Reset email FAILED:', emailError);
+      }
+    }
+
+    // Sob shomoy same response (email exist kore kina ta leak hobe na)
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: 'If an account exists with this email, a reset link has been sent.',
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error instanceof Error ? error.message : 'Something went wrong',
+    });
+  }
+};
+
+const resetPassword = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { token, newPassword } = req.body;
+    const result = await AuthService.resetPasswordInDB(token, newPassword);
+
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: result.message,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error instanceof Error ? error.message : 'Password reset failed',
+    });
+  }
+};
+
+
+
 export const AuthController = {
   registerUser,
   loginUser,
   logoutUser,
   googleCallback,
+  forgotPassword,
+  resetPassword,
 };

@@ -5,6 +5,10 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+import crypto from 'crypto'; 
+
+
+const resetToken = crypto.randomBytes ? crypto.randomBytes(32).toString('hex') : Math.random().toString(36).substring(2) + Date.now().toString(36);
 dotenv.config();
 
 const connectionString = String(process.env.DATABASE_URL || '');
@@ -12,9 +16,7 @@ const pool = new pg.Pool({ connectionString });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
-// ==========================================
-// TOKEN GENERATION HELPERS
-// ==========================================
+
 const createToken = (
   jwtPayload: { id: string; email: string; role: string },
   secret: string,
@@ -200,6 +202,67 @@ const isTokenBlacklisted = (token: string) => {
   return tokenBlacklist.has(token);
 };
 
+
+
+
+// ==========================================
+// 6. FORGOT / RESET PASSWORD
+// ==========================================
+const hashToken = (token: string) =>
+  crypto.createHash('sha256').update(token).digest('hex');
+
+const forgotPasswordInDB = async (email: string) => {
+  const user = await prisma.user.findUnique({ where: { email } });
+
+  // user na thakle / blocked hole null return (controller generic response dibe)
+  if (!user || user.isDeleted || user.isBlocked) return null;
+
+  const rawToken = crypto.randomBytes(32).toString('hex');
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      passwordResetToken: hashToken(rawToken),
+      passwordResetExpires: new Date(Date.now() + 15 * 60 * 1000), // 15 min
+    },
+  });
+
+  return { email: user.email, fullName: user.fullName, rawToken };
+};
+
+const resetPasswordInDB = async (token: string, newPassword: string) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      passwordResetToken: hashToken(token),
+      passwordResetExpires: { gt: new Date() },
+    },
+  });
+
+  if (!user) {
+    throw new Error('Reset link is invalid or has expired!');
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      password: hashedPassword,
+      passwordResetToken: null,   // token ek bar-ei use hobe
+      passwordResetExpires: null,
+    },
+  });
+
+  return { message: 'Password reset successfully!' };
+};
+
+
+
+
+
+
+
+
 // ==========================================
 // 5. GOOGLE OAUTH USER
 // ==========================================
@@ -250,4 +313,6 @@ export const AuthService = {
   isTokenBlacklisted,
   issueTokensForUser,
   findOrCreateGoogleUser,
+  resetPasswordInDB,
+  forgotPasswordInDB,
 };

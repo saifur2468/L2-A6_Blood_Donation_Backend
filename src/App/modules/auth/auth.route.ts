@@ -26,7 +26,7 @@ router.get('/google', (req, res, next) => {
   })(req, res, next);
 });
 
-// এখানে সরাসরি AuthController.googleCallback ব্যবহার করা হলো যাতে রিডাইরেক্ট কাজ করে
+
 router.get(
   '/google/callback',
   passport.authenticate('google', {
@@ -35,5 +35,23 @@ router.get(
   }),
   AuthController.googleCallback
 );
+
+
+
+
+
+router.post(
+  '/forgot-password',
+  validateRequest(AuthValidation.forgotPasswordValidationSchema),
+  AuthController.forgotPassword
+);
+
+router.post(
+  '/reset-password',
+  validateRequest(AuthValidation.resetPasswordValidationSchema),
+  AuthController.resetPassword
+);
+
+
 
 export const AuthRoutes = router;

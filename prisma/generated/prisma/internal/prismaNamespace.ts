@@ -978,6 +978,8 @@ export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeo
 
 
 export const UserScalarFieldEnum = {
+  passwordResetToken: 'passwordResetToken',
+  passwordResetExpires: 'passwordResetExpires',
   id: 'id',
   email: 'email',
   password: 'password',
