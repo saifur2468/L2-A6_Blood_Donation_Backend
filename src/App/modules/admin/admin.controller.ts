@@ -13,19 +13,43 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// const toggleUserBlockStatus = catchAsync(async (req: Request, res: Response) => {
+//   const adminId = req.user.id;
+//   const { userId } = req.params;
+//   const { isBlocked } = req.body;
+
+//   const result = await AdminService.toggleUserBlockStatusInDB(adminId, userId, isBlocked);
+//   sendResponse(res, {
+//     statusCode: 200,
+//     success: true,
+//     message: `User ${isBlocked ? 'blocked' : 'unblocked'} successfully`,
+//     data: result,
+//   });
+// });
+
+
+
+
+
+
 const toggleUserBlockStatus = catchAsync(async (req: Request, res: Response) => {
   const adminId = req.user.id;
   const { userId } = req.params;
-  const { isBlocked } = req.body;
 
-  const result = await AdminService.toggleUserBlockStatusInDB(adminId, userId, isBlocked);
+  const result = await AdminService.toggleUserBlockStatusInDB(adminId, userId);
+  
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: `User ${isBlocked ? 'blocked' : 'unblocked'} successfully`,
+    message: `User ${result.isBlocked ? 'blocked' : 'unblocked'} successfully`,
     data: result,
   });
 });
+
+
+
+
+
 
 const updateUserRole = catchAsync(async (req: Request, res: Response) => {
   const adminId = req.user.id;

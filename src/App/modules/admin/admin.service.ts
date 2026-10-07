@@ -16,23 +16,66 @@ const getAllUsersFromDB = async () => {
   });
 };
 
-const toggleUserBlockStatusInDB = async (adminId: string, userId: string, isBlocked: boolean) => {
+// const toggleUserBlockStatusInDB = async (adminId: string, userId: string, isBlocked: boolean) => {
+//   const user = await prisma.user.update({
+//     where: { id: userId },
+//     data: { isBlocked },
+//   });
+
+//   await prisma.auditLog.create({
+//     data: {
+//       userId: adminId, 
+//       entity: 'USER',
+//       action: isBlocked ? 'USER_BLOCKED' : 'USER_UNBLOCKED',
+//       details: `User ${user.email} was ${isBlocked ? 'blocked' : 'unblocked'}.`,
+//     },
+//   });
+
+//   return user;
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+const toggleUserBlockStatusInDB = async (adminId: string, userId: string) => {
+  // প্রথোমে ইউজারকে খুঁজে বের করুন
+  const existingUser = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!existingUser) {
+    throw new Error('User not found');
+  }
+
+  // বর্তমান স্ট্যাটাসের উল্টোটা সেট হবে (true থাকলে false, false থাকলে true)
+  const newBlockStatus = !existingUser.isBlocked;
+
   const user = await prisma.user.update({
     where: { id: userId },
-    data: { isBlocked },
+    data: { isBlocked: newBlockStatus },
   });
 
   await prisma.auditLog.create({
     data: {
       userId: adminId, 
       entity: 'USER',
-      action: isBlocked ? 'USER_BLOCKED' : 'USER_UNBLOCKED',
-      details: `User ${user.email} was ${isBlocked ? 'blocked' : 'unblocked'}.`,
+      action: newBlockStatus ? 'USER_BLOCKED' : 'USER_UNBLOCKED',
+      details: `User ${user.email} was ${newBlockStatus ? 'blocked' : 'unblocked'}.`,
     },
   });
 
   return user;
 };
+
+
 
 const updateUserRoleInDB = async (adminId: string, userId: string, role: Role) => {
   const updatedUser = await prisma.user.update({

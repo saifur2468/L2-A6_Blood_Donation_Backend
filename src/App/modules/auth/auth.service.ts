@@ -90,13 +90,56 @@ const registerUserInDB = async (payload: any) => {
 // ==========================================
 // 2. LOGIN USER
 // ==========================================
+// const loginUser = async (payload: { email: string; password: string }) => {
+//   const user = await prisma.user.findUnique({
+//     where: { email: payload.email },
+//   });
+
+//   if (!user) {
+//     throw new Error('User not found with this email!');
+//   }
+
+//   if (!user.password) {
+//     throw new Error('This account uses Google login. Please log in with Google.');
+//   }
+
+//   const isPasswordMatched = await bcrypt.compare(payload.password, user.password);
+
+//   if (!isPasswordMatched) {
+//     throw new Error('Incorrect password!');
+//   }
+
+//   const { accessToken, refreshToken } = issueTokensForUser({
+//     id: user.id,
+//     email: user.email,
+//     role: user.role,
+//   });
+
+//   return {
+//     accessToken,
+//     refreshToken,
+//     user: {
+//       id: user.id,
+//       fullName: user.fullName,
+//       email: user.email,
+//       role: user.role,
+//     },
+//   };
+// };
+
 const loginUser = async (payload: { email: string; password: string }) => {
   const user = await prisma.user.findUnique({
     where: { email: payload.email },
   });
+  console.log("LOGIN CHECK - User Data:", { email: user?.email, isBlocked: user?.isBlocked });
 
   if (!user) {
     throw new Error('User not found with this email!');
+  }
+
+  // 🛑 এই চেকটি অবশ্যই থাকতে হবে এবং পাসওয়ার্ড চেক করার আগে হতে হবে!
+  if (user.isBlocked) {
+    throw new Error('Your account has been blocked by the admin. You cannot log in.');
   }
 
   if (!user.password) {
@@ -126,6 +169,7 @@ const loginUser = async (payload: { email: string; password: string }) => {
     },
   };
 };
+
 
 // ==========================================
 // 3. UPDATE PROFILE (FIXED UPDATE ISSUE)

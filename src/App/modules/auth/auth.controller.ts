@@ -75,6 +75,31 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+// const loginUser = async (req: Request, res: Response): Promise<void> => {
+//   try {
+//     const result = await AuthService.loginUser(req.body);
+//     const { accessToken, refreshToken, user } = result;
+
+//     res.cookie('refreshToken', refreshToken, {
+//       secure: process.env.NODE_ENV === 'production',
+//       httpOnly: true,
+//     });
+
+//     res.status(200).json({
+//       success: true,
+//       statusCode: 200,
+//       message: 'User logged in successfully!',
+//       data: { accessToken, user },
+//     });
+//   } catch (error) {
+//     res.status(401).json({
+//       success: false,
+//       message: error instanceof Error ? error.message : 'Login failed',
+//     });
+//   }
+// };
+
+
 const loginUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const result = await AuthService.loginUser(req.body);
@@ -91,9 +116,14 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
       message: 'User logged in successfully!',
       data: { accessToken, user },
     });
-  } catch (error) {
-    res.status(401).json({
+  } catch (error: any) {
+    // যদি মেসেজে 'blocked' থাকে, তবে 403 Forbidden রিটার্ন করুন
+    const isBlockedError = error.message?.toLowerCase().includes('blocked');
+    const statusCode = isBlockedError ? 403 : 401;
+
+    res.status(statusCode).json({
       success: false,
+      statusCode: statusCode,
       message: error instanceof Error ? error.message : 'Login failed',
     });
   }
