@@ -27,11 +27,6 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
 //   });
 // });
 
-
-
-
-
-
 const toggleUserBlockStatus = catchAsync(async (req: Request, res: Response) => {
   const adminId = req.user.id;
   const { userId } = req.params;
@@ -45,11 +40,6 @@ const toggleUserBlockStatus = catchAsync(async (req: Request, res: Response) => 
     data: result,
   });
 });
-
-
-
-
-
 
 const updateUserRole = catchAsync(async (req: Request, res: Response) => {
   const adminId = req.user.id;
@@ -68,7 +58,7 @@ const updateUserRole = catchAsync(async (req: Request, res: Response) => {
 const updateBloodRequestStatus = catchAsync(async (req: Request, res: Response) => {
   const adminId = req.user.id;
   const { requestId } = req.params;
-  const { status } = req.body; // 'APPROVED' or 'REJECTED'
+  const { status } = req.body; 
 
   const result = await AdminService.updateBloodRequestStatusInDB(adminId, requestId, status);
   sendResponse(res, {

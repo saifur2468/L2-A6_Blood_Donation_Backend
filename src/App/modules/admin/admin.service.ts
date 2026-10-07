@@ -34,19 +34,8 @@ const getAllUsersFromDB = async () => {
 //   return user;
 // };
 
-
-
-
-
-
-
-
-
-
-
-
 const toggleUserBlockStatusInDB = async (adminId: string, userId: string) => {
-  // প্রথোমে ইউজারকে খুঁজে বের করুন
+ 
   const existingUser = await prisma.user.findUnique({
     where: { id: userId },
   });
@@ -55,7 +44,7 @@ const toggleUserBlockStatusInDB = async (adminId: string, userId: string) => {
     throw new Error('User not found');
   }
 
-  // বর্তমান স্ট্যাটাসের উল্টোটা সেট হবে (true থাকলে false, false থাকলে true)
+ 
   const newBlockStatus = !existingUser.isBlocked;
 
   const user = await prisma.user.update({

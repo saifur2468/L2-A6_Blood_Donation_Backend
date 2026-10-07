@@ -36,10 +36,6 @@ router.get(
   AuthController.googleCallback
 );
 
-
-
-
-
 router.post(
   '/forgot-password',
   validateRequest(AuthValidation.forgotPasswordValidationSchema),

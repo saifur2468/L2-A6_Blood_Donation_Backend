@@ -117,7 +117,7 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
       data: { accessToken, user },
     });
   } catch (error: any) {
-    // যদি মেসেজে 'blocked' থাকে, তবে 403 Forbidden রিটার্ন করুন
+  
     const isBlockedError = error.message?.toLowerCase().includes('blocked');
     const statusCode = isBlockedError ? 403 : 401;
 
