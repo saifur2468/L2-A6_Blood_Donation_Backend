@@ -46,10 +46,6 @@ const issueTokensForUser = (user: { id: string; email: string; role: string }) =
 
   return { accessToken, refreshToken };
 };
-
-// ==========================================
-// 1. REGISTER USER
-// ==========================================
 const registerUserInDB = async (payload: any) => {
   const isUserExists = await prisma.user.findUnique({
     where: { email: payload.email },
@@ -69,8 +65,8 @@ const registerUserInDB = async (payload: any) => {
       phoneNumber: payload.phoneNumber,
       bloodGroup: payload.bloodGroup,
       city: payload.city,
-      // role: payload.role || 'PATIENT',
-      role:  'PATIENT',
+      
+      role: payload.role || 'PATIENT', 
     },
     select: {
       id: true,
@@ -137,7 +133,7 @@ const loginUser = async (payload: { email: string; password: string }) => {
     throw new Error('User not found with this email!');
   }
 
-  // 🛑 এই চেকটি অবশ্যই থাকতে হবে এবং পাসওয়ার্ড চেক করার আগে হতে হবে!
+  
   if (user.isBlocked) {
     throw new Error('Your account has been blocked by the admin. You cannot log in.');
   }
